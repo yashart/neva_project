@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>menus/MainMenu.qml</file>
+        <file>map/MapComponent.qml</file>
+        <file>map/MapPlugin.qml</file>
+        <file>menus/OpenGPX.qml</file>
+        <file>menus/MakeGPX.qml</file>
+        <file>components/PictureWindow.qml</file>
+        <file>menus/ToolBarMap.qml</file>
+        <file>img/add_location_icon.png</file>
+        <file>img/mouse_icon.png</file>
+        <file>img/remove_location_icon.png</file>
+        <file>menus/ImageSlideView.qml</file>
+        <file>img/photo_example.jpg</file>
+        <file>components/XmlModel.qml</file>
+        <file>pages/PageAutorization.qml</file>
+        <file>pages/PageMap.qml</file>
+        <file>components/RowPicture.qml</file>
+        <file>main.cpp</file>
+        <file>makegpx.cpp</file>
+        <file>makegpx.h</file>
+        <file>img/tank.png</file>
+        <file>img/launcher.png</file>
+        <file>img/grid.png</file>
+    </qresource>
+</RCC>
