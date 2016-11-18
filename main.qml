@@ -42,6 +42,11 @@ ApplicationWindow {
         visible: true
     }
 
+    PopupMapMenu {
+        id: popupMapMenu
+        visible: false
+    }
+
     PictureWindow {
         id: pictureWindow
         visible: false

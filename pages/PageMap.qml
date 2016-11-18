@@ -30,5 +30,9 @@ Item {
     function toCoordinates(point){
         return mapComponent.toCoordinates(point);
     }
+    function addPopupPoint()
+    {
+        mapComponent.addPopupPoint();
+    }
 
 }

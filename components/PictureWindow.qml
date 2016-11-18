@@ -119,7 +119,7 @@ Window {
                             image.z = ++root.highestZ;
                             parent.setFrameColor();
                         }
-                        onEntered: parent.setFrameColor();
+                        //onEntered: parent.setFrameColor();
                         onWheel: {
                             if (wheel.modifiers & Qt.ControlModifier) {
                                 image.rotation += wheel.angleDelta.y / 120 * 5;

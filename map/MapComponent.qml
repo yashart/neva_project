@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtLocation 5.7
 import QtPositioning 5.2
+import QtQuick.Controls 1.4
 
 
 Map {
@@ -16,13 +17,19 @@ Map {
         longitude: 37.522469
     }
 
+    property var popupX: 0
+    property var popupY: 0
+
     MouseArea {
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
+            popupMapMenu.visible = false;
             var coordinates = 0;
             var icon_src = "";
             var type = "";
-            if(toolBarMap.getActiveTool() == "add_launcher" || toolBarMap.getActiveTool() == "add_tank")
+            if((toolBarMap.getActiveTool() == "add_launcher" || toolBarMap.getActiveTool() == "add_tank")
+                    && (mouse.button == Qt.LeftButton))
             {
                 icon_src = toolBarMap.getActiveToolIcon();
                 type = toolBarMap.getActiveTool();
@@ -33,7 +40,7 @@ Map {
                                              "icon_path": icon_src.toString()});
                 console.log(toolBarMap.getActiveToolIcon());
             }
-            if(toolBarMap.getActiveTool() == "remove_location")
+            if(toolBarMap.getActiveTool() == "remove_location" && mouse.button == Qt.LeftButton)
             {
                 coordinates = map.toCoordinate(Qt.point(mouse.x,mouse.y));
                 var pointItem;
@@ -46,6 +53,15 @@ Map {
                     }
                 }
                 console.log("!");
+            }
+            if(mouse.button == Qt.RightButton)
+            {
+                map.popupX = mouse.x;
+                map.popupY = mouse.y;
+                popupMapMenu.x = mouse.x + rootItem.x;
+                popupMapMenu.y = mouse.y + rootItem.y;
+                popupMapMenu.visible = true;
+                console.log("Right button: " + map.popupX + " " + map.popupY);
             }
         }
     }
@@ -111,5 +127,15 @@ Map {
     }
     function toCoordinates(point){
         return map.toCoordinate(point);
+    }
+    function addPopupPoint(){
+        var icon_src = popupMapMenu.getActiveToolIcon();
+        var type = popupMapMenu.getActiveTool();
+        var coordinates = map.toCoordinate(Qt.point(map.popupX,map.popupY));
+        locationsCoordinates.append({"lat": coordinates.latitude,
+                                     "lon": coordinates.longitude,
+                                     "type": type.toString(),
+                                     "icon_path": icon_src.toString()});
+        popupMapMenu.visible = false;
     }
 }

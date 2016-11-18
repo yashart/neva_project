@@ -23,5 +23,15 @@
         <file>img/tank.png</file>
         <file>img/launcher.png</file>
         <file>img/grid.png</file>
+        <file>map/PopupMapMenu.qml</file>
+        <file>img/bullbasaur.png</file>
+        <file>img/charmander.png</file>
+        <file>img/eevee.png</file>
+        <file>img/jigglypuff.png</file>
+        <file>img/pikachu.png</file>
+        <file>img/pokeball.png</file>
+        <file>img/psyduck.png</file>
+        <file>img/snorlax.png</file>
+        <file>img/squirtle.png</file>
     </qresource>
 </RCC>
