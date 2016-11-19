@@ -5,17 +5,22 @@
 #include "database/database.h"
 #include "database/tracksmodel.h"
 #include "database/pointsmodel.h"
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    DataBase db("C:\\Qt\\work\\build-ParseAndSQL-Desktop_Qt_5_7_0_MinGW_32bit-Debug\\debug\\DataBase.db");
+
+    DataBase db;
     TracksModel trackModel;
     PointsModel pointModel;
+
     //db.parseUD();
     //db.printTracks();
     //db.printPoints();
+
+    //qDebug() << QDir::currentPath();
 
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

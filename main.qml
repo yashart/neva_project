@@ -54,4 +54,7 @@ ApplicationWindow {
     XmlModel {
         id: xmlModel
     }
+    TrackWindow{
+        id: trackWindow
+    }
 }

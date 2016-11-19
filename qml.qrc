@@ -30,5 +30,7 @@
         <file>img/psyduck.png</file>
         <file>img/snorlax.png</file>
         <file>img/squirtle.png</file>
+        <file>components/TrackWindow.qml</file>
+        <file>img/photo.png</file>
     </qresource>
 </RCC>

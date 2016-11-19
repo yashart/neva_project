@@ -95,28 +95,37 @@ Map {
     }
 
     MapItemView{
-        model: xmlModel
-        delegate: MapCircle {
-            center {
-                latitude: lat
-                longitude: lon
+        id: secondView
+        model: pointsModel
+        delegate: MapQuickItem {
+            anchorPoint.x: image.width/4
+            anchorPoint.y: image.height
+
+            coordinate: QtPositioning.coordinate(lat, lon)
+
+            sourceItem: Image {
+                id: image
+                source: "qrc:/img/photo.png"
             }
-            radius: 15.0
-            color: 'green'
-            border.width: 3
+
             property var image_src: -1
+
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
+                    pictureWindow.data
                     pictureWindow.visible = true;
-                    image_src = src;
-                    var true_src = src;
-                    console.log(pictureWindow.getFolderSource());
-                    pictureWindow.changeImageSource(pictureWindow.getFolderSource() + true_src, true_src);
+                    image_src = comment;
+                    var true_src = comment;
+                    console.log(comment)
+                    pictureWindow.changeImageSource("file:///D:/DSC00854.JPG", "DSC00854.JPG");
+                    console.log(pointsModel.rowCount())
                 }
             }
         }
     }
+
+
     function changeMapCenter(lat, lon)
     {
         map.center.latitude = lat;

@@ -21,7 +21,7 @@ class DataBase : public QObject
 private:
     QSqlDatabase db;
 public:
-    explicit DataBase(QString db_path, QObject *parent = 0);
+    explicit DataBase(QObject *parent = 0);
     ~DataBase(){
      db.close();
     }

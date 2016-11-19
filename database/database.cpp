@@ -1,8 +1,8 @@
 #include "database.h"
-DataBase::DataBase(QString db_path, QObject *parent) : QObject(parent)
+DataBase::DataBase(QObject *parent) : QObject(parent)
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(db_path);
+    db.setDatabaseName("./DataBase.db");
     db.open();
 }
 
