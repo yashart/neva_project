@@ -32,5 +32,8 @@
         <file>img/squirtle.png</file>
         <file>components/TrackWindow.qml</file>
         <file>img/photo.png</file>
+        <file>img/track_icon/del24.png</file>
+        <file>img/track_icon/plus24.png</file>
+        <file>img/track_icon/edit24.png</file>
     </qresource>
 </RCC>

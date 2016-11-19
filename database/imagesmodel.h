@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSqlQueryModel>
 
-class PointsModel : public QSqlQueryModel
+class ImagesModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
@@ -18,14 +18,12 @@ public:
         LatRole,
         LonRole,
         AltRole,
-        DirRole,
-        URLRole,
         CommentRole,
         TypeRole
     };
 
     // объявляем конструктор класса
-    explicit PointsModel(QObject *parent = 0);
+    explicit ImagesModel(QObject *parent = 0);
 
     // Переопределяем метод, который будет возвращать данные
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;

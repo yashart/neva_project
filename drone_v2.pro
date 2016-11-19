@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     exif/exifinfo.cpp \
     database/database.cpp \
     database/pointsmodel.cpp \
-    database/tracksmodel.cpp
+    database/tracksmodel.cpp \
+    database/imagesmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -24,7 +25,8 @@ HEADERS += \
     exif/exifinfo.h \
     database/database.h \
     database/pointsmodel.h \
-    database/tracksmodel.h
+    database/tracksmodel.h \
+    database/imagesmodel.h
 
 DISTFILES += \
     database/DataBase.db

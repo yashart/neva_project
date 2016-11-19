@@ -1,7 +1,7 @@
 #include "database.h"
-#include "pointsmodel.h"
+#include "imagesmodel.h"
 
-PointsModel::PointsModel(QObject *parent) :
+ImagesModel::ImagesModel(QObject *parent) :
     QSqlQueryModel(parent)
 {
     this->updateModel();
@@ -11,7 +11,7 @@ PointsModel::PointsModel(QObject *parent) :
  * Вообще этот метод создан для QML. Именно он его скрытно
  * использует
 */
-QVariant PointsModel::data(const QModelIndex & index, int role) const
+QVariant ImagesModel::data(const QModelIndex & index, int role) const
 {
     // Определяем номер колонки, адрес так сказать, по номеру роли
     int columnId = role - Qt::UserRole - 1;
@@ -24,13 +24,13 @@ QVariant PointsModel::data(const QModelIndex & index, int role) const
     return QSqlQueryModel::data(modelIndex, Qt::DisplayRole);
 }
 
-void PointsModel::addId(QString new_id)
+void ImagesModel::addId(QString new_id)
 {
     list_id.append(new_id);
 
 }
 
-void PointsModel::delId(QString del_id)
+void ImagesModel::delId(QString del_id)
 {
     for (int i = 0; i < list_id.size(); i++)
         if (list_id.at(i) == del_id)
@@ -41,7 +41,7 @@ void PointsModel::delId(QString del_id)
 }
 
 //Метод для получения имен ролей через хешированную таблицу.
-QHash<int, QByteArray> PointsModel::roleNames() const {
+QHash<int, QByteArray> ImagesModel::roleNames() const {
     /* То есть сохраняем в хеш-таблицу названия ролей
      * по их номеру
      * */
@@ -50,15 +50,13 @@ QHash<int, QByteArray> PointsModel::roleNames() const {
     roles[LatRole] = "lat";
     roles[LonRole] = "lon";
     roles[AltRole] = "alt";
-    roles[DirRole] = "dir";
-    roles[URLRole] = "url";
     roles[CommentRole] = "comment";
     roles[TypeRole] = "type";
     return roles;
 }
 
 // Метод обновления таблицы в модели представления данных
-void PointsModel::updateModel()
+void ImagesModel::updateModel()
 {
     // Обновление производится SQL-запросом к базе данных
     QString str_query("SELECT ");
@@ -66,12 +64,9 @@ void PointsModel::updateModel()
     str_query.append("Points.lat, ");
     str_query.append("Points.lon, ");
     str_query.append("Points.alt, ");
-    str_query.append("Tracks.dir, ");
-    str_query.append("Points.url, ");
     str_query.append("Points.comment, ");
     str_query.append("Points.type ");
     str_query.append("FROM Points ");
-    str_query.append("LEFT OUTER JOIN Tracks ON Tracks.id = Points.track_id ");
     str_query.append("WHERE Points.track_id IN (");
 
     for (int i = 0; i < list_id.size(); i++){
@@ -96,7 +91,7 @@ void PointsModel::updateModel()
 }
 
 //Получение id из строки в модели представления данных
-int PointsModel::getId(int row)
+int ImagesModel::getId(int row)
 {
     return this->data(this->index(row, 0), IdRole).toInt();
 }

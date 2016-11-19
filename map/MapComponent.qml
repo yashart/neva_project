@@ -109,12 +109,11 @@ Map {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    pictureWindow.data
+                    pictureWindow.data;
                     pictureWindow.visible = true;
-                    image_src = comment;
-                    var true_src = comment;
-                    console.log(comment)
-                    pictureWindow.changeImageSource("file:///G:/first_fly/" + true_src, true_src);
+                    image_src = url;
+                    pictureWindow.changeImageSource("file:///" + dir + url, url);
+                    console.log("file:///" + dir + url);
                 }
             }
         }

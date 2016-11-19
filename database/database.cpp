@@ -24,6 +24,46 @@ void DataBase::printTracks()
     }
 }
 
+//Функция вычисляет "центр масс" множества точек ШИРОТЫ
+double DataBase::getAvgLat(int track_id)
+{
+    QSqlQuery query;
+    query.prepare("SELECT AVG(lat) FROM Points WHERE Points.track_id = :track_id");
+    query.bindValue(":track_id", track_id);
+    if (!query.exec()){
+        qDebug() << "Error:" << query.lastError().text();
+    }
+
+    //Выводим значения из запроса
+    while (query.next())
+    {
+        QString lat = query.value(0).toString().toLocal8Bit().constData();
+        return lat.toDouble(); // широта
+    }
+
+    return -1; //ошибка
+}
+
+//Функция вычисляет "центр масс" множества точек ДОЛГОТЫ
+double DataBase::getAvgLon(int track_id)
+{
+    QSqlQuery query;
+    query.prepare("SELECT AVG(lon) FROM Points WHERE Points.track_id = :track_id");
+    query.bindValue(":track_id", track_id);
+    if (!query.exec()){
+        qDebug() << "Error:" << query.lastError().text();
+    }
+
+    //Выводим значения из запроса
+    while (query.next())
+    {
+        QString lat = query.value(0).toString().toLocal8Bit().constData();
+        return lat.toDouble(); // долгота
+    }
+
+    return -1; //ошибка
+}
+
 void DataBase::printPoints()
 {
     QSqlQuery query;
@@ -56,10 +96,12 @@ void DataBase::insertIntoTable(QString name)
     }
 }
 
-int DataBase::parseUD()
+int DataBase::parseCSV(QString path)
 {   
+    path.replace(QString("file:///"), QString(""));
+    QString filePath = path;
 
-    QFile file("jpg.txt");
+    QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << file.errorString();
         return 1;
@@ -70,12 +112,12 @@ int DataBase::parseUD()
         QStringList csv(line.split('\t'));
 
         QSqlQuery query;
-        query.prepare("INSERT INTO Points (track_id, lat, lon, alt, comment, type) VALUES (:id, :lat, :lon, :alt, :comment, :type)");
+        query.prepare("INSERT INTO Points (track_id, lat, lon, alt, url, type) VALUES (:id, :lat, :lon, :alt, :url, :type)");
         query.bindValue(":id", "1");
         query.bindValue(":lat", csv[LAT]);
         query.bindValue(":lon", csv[LON]);
         query.bindValue(":alt", csv[ALT]);
-        query.bindValue(":comment", csv[IMG_PATH]);
+        query.bindValue(":url", csv[IMG_PATH]);
         query.bindValue(":type", "test");
 
         if (!query.exec()){

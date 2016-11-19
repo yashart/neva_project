@@ -3,6 +3,8 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.2
+import "../pages"
 
 Window {
     visible: false
@@ -10,84 +12,106 @@ Window {
     minimumWidth: 300
     minimumHeight: 400
 
-    Button{
-        id: add
-        height: 40
-        text:"Добавить"
-        width: parent.width / 3
-        onClicked: {
-            dataBase.parseUD();
+    ColumnLayout {
+        spacing: 2
+        ToolBar {
+            id: tracksWindowToolBar
+            z: 1
+            style: ToolBarStyle {
+                background: Rectangle {
+                    implicitHeight: 25
+                    implicitWidth: pictureWindow.width
+                    border.color: "#999"
+                    gradient: Gradient {
+                        GradientStop { position: 0 ; color: "#fff" }
+                        GradientStop { position: 1 ; color: "#eee" }
+                    }
+                }
+            }
+            RowLayout {
+                GroupBox {
+                    RowLayout {
+                        ExclusiveGroup { id: tracksWindowToolsGroup }
+                        anchors.fill: parent
+                        ToolButton {
+                            iconSource: "qrc:/img/track_icon/plus24.png"
+                            iconName: "add"
+                            exclusiveGroup: tracksWindowToolsGroup
+                            onClicked: getParseFileDialog.open()
+                        }
+                        ToolButton {
+                            iconSource: "qrc:/img/track_icon/del24.png"
+                            iconName: "add_tank"
+                            exclusiveGroup: tracksWindowToolsGroup
+                        }
+                        ToolButton {
+                            iconSource: "qrc:/img/track_icon/edit24.png"
+                            iconName: "add_tank"
+                            exclusiveGroup: tracksWindowToolsGroup
+                        }
+                    }
+                }
+            }
         }
-    }
-    Button{
-        id: del
-        width: parent.width / 3
-        height: add.height
-        anchors.left: add.right
-        text:"Удалить"
-    }
-    Button{
-        id: chg
-        width: parent.width / 3
-        height: add.height
-        anchors.left: del.right
-        text:"Проверить"
-    }
-
-
-    Rectangle {
-        width: parent.width;
-        height: parent.height - add.height
-        anchors.top: add.bottom
-
-        Component {
-            id: contactDelegate
-
-            CheckBox{
-                property int trackId: idd
+        Rectangle {
+            width: parent.width;
+            height: trackWindow.height - tracksWindowToolBar.height
+            anchors.top: tracksWindowToolBar.bottom
+            Component {
+                id: contactDelegate
+                CheckBox{
+                property int trackId: id
                 text: qsTr(name)
                 onCheckedStateChanged:{
                     if (checked == true){
-                        pointsModel.addId(idd);
+                        pointsModel.addId(id);
                     }
                     if (checked == false){
-                        pointsModel.delId(idd);
+                        pointsModel.delId(id);
                     }
                     pointsModel.updateModel()
                 }
-            }
-
-        }
-
-        ListModel {
-            id: trks
-
-            ListElement {
-                idd: 1
-                name: "Тихорец1"
-            }
-            ListElement {
-                idd: 2
-                name: "Тихорецк2"
-            }
-            ListElement {
-                idd: 3
-                name: "Тихорецк3"
-            }
-        }
-
-        ScrollView {
-            width: parent.width
-            height: parent.height
-            ListView {
-                anchors.margins: 10
-                spacing: 10
-                id: tracksList
-                model: trks
-                delegate: contactDelegate
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.RightButton
+                    onClicked: {
+                        var lat = dataBase.getAvgLat(trackId)
+                        var lon = dataBase.getAvgLon(trackId)
+                        if (lat !== 0 && lon !== 0 && parent.checked == true)
+                        {
+                            pageMap.changeMapCenter(lat, lon)
+                        }
+                    }
+                }
             }
         }
 
 
+            ScrollView {
+                width: parent.width
+                height: parent.height
+                ListView {
+                    anchors.margins: 10
+                    spacing: 10
+                    id: tracksList
+                    model: tracksModel
+                    delegate: contactDelegate
+                }
+            }
+        }
+    }
+
+    FileDialog {
+        id: getParseFileDialog
+        title: "Выберите csv файл"
+        folder: shortcuts.home
+        onAccepted: {
+            console.log(fileUrl);
+            dataBase.parseCSV(fileUrl);
+        }
+        onRejected: {
+            console.log("Canceled");
+        }
     }
 }
+

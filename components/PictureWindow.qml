@@ -150,6 +150,7 @@ Window {
                     height: pictureWindow.height - imageSlideView.height - 50
                     source: "../img/photo_example.jpg"
                     autoTransform: true
+                    fillMode: Image.PreserveAspectFit
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {

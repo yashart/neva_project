@@ -31,8 +31,10 @@ signals:
 public slots:
     void printTracks();
     void printPoints();
+    double getAvgLat(int track_id);
+    double getAvgLon(int track_id);
     void insertIntoTable(QString name);
-    int parseUD();
+    int parseCSV(QString path);
 };
 
 #endif // DATABASE_H
