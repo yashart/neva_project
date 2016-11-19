@@ -1,5 +1,5 @@
-#ifndef POINTSMODEL_H
-#define POINTSMODEL_H
+#ifndef IMAGESMODEL_H
+#define IMAGESMODEL_H
 
 #include <QObject>
 #include <QSqlQueryModel>
@@ -18,6 +18,8 @@ public:
         LatRole,
         LonRole,
         AltRole,
+        DirRole,
+        URLRole,
         CommentRole,
         TypeRole
     };
@@ -44,4 +46,4 @@ public slots:
     int getId(int row);
 };
 
-#endif // POINTSMODEL_H
+#endif // IMAGESMODEL_H

@@ -50,6 +50,8 @@ QHash<int, QByteArray> ImagesModel::roleNames() const {
     roles[LatRole] = "lat";
     roles[LonRole] = "lon";
     roles[AltRole] = "alt";
+    roles[DirRole] = "dir";
+    roles[URLRole] = "url";
     roles[CommentRole] = "comment";
     roles[TypeRole] = "type";
     return roles;
@@ -64,9 +66,12 @@ void ImagesModel::updateModel()
     str_query.append("Points.lat, ");
     str_query.append("Points.lon, ");
     str_query.append("Points.alt, ");
+    str_query.append("Tracks.dir, ");
+    str_query.append("Points.url, ");
     str_query.append("Points.comment, ");
     str_query.append("Points.type ");
     str_query.append("FROM Points ");
+    str_query.append("LEFT OUTER JOIN Tracks ON Tracks.id = Points.track_id ");
     str_query.append("WHERE Points.track_id IN (");
 
     for (int i = 0; i < list_id.size(); i++){

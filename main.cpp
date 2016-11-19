@@ -5,6 +5,7 @@
 #include "database/database.h"
 #include "database/tracksmodel.h"
 #include "database/pointsmodel.h"
+#include "database/imagesmodel.h"
 #include <QDir>
 
 int main(int argc, char *argv[])
@@ -13,10 +14,10 @@ int main(int argc, char *argv[])
 
 
     DataBase db;
-    TracksModel trackModel;
-    PointsModel pointModel;
+    TracksModel tracksModel;
+    PointsModel pointsModel;
+    ImagesModel imagesModel;
 
-    //db.parseUD();
     //db.printTracks();
     //db.printPoints();
 
@@ -31,8 +32,9 @@ int main(int argc, char *argv[])
 
     ctx->setContextProperty("CMakeGPX", &mkgpx);
     ctx->setContextProperty("dataBase", &db);
-    ctx->setContextProperty("tracksModel", &trackModel);
-    ctx->setContextProperty("pointsModel", &pointModel);
+    ctx->setContextProperty("tracksModel", &tracksModel);
+    ctx->setContextProperty("pointsModel", &pointsModel);
+    ctx->setContextProperty("imagesModel", &imagesModel);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();

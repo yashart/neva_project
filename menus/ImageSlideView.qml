@@ -9,7 +9,7 @@ ScrollView {
     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
     RowLayout {
         Repeater {
-            model: pictureWindow.getXmlModel()
+            model: imagesModel
             delegate: Rectangle {
                 width: 166
                 height: imageSlideView.height - 10
@@ -17,12 +17,12 @@ ScrollView {
                     anchors.fill: parent
                     Image {
                         anchors.fill: parent
-                        source: xmlModel.folder_path + src
+                        source: "file:///" + dir + url
                         autoTransform: true
                         smooth: false
                     }
                     onClicked: {
-                        pictureWindow.changeImageSource(xmlModel.folder_path + src, src);
+                        pictureWindow.changeImageSource("file:///" + dir + url, url);
                     }
                 }
             }
