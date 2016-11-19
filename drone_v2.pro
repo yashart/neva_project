@@ -1,10 +1,13 @@
-QT += qml quick widgets
+QT += qml quick widgets sql
 
 CONFIG += c++11
 
 SOURCES += main.cpp \
     makegpx.cpp \
-    exif/exifinfo.cpp
+    exif/exifinfo.cpp \
+    database/database.cpp \
+    database/pointsmodel.cpp \
+    database/tracksmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,4 +21,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     makegpx.h \
-    exif/exifinfo.h
+    exif/exifinfo.h \
+    database/database.h \
+    database/pointsmodel.h \
+    database/tracksmodel.h

@@ -17,9 +17,6 @@
         <file>pages/PageAutorization.qml</file>
         <file>pages/PageMap.qml</file>
         <file>components/RowPicture.qml</file>
-        <file>main.cpp</file>
-        <file>makegpx.cpp</file>
-        <file>makegpx.h</file>
         <file>img/tank.png</file>
         <file>img/launcher.png</file>
         <file>img/grid.png</file>
