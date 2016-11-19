@@ -2,7 +2,7 @@
 DataBase::DataBase(QObject *parent) : QObject(parent)
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("./DataBase.db");
+    db.setDatabaseName("DataBase.db");
     db.open();
 }
 

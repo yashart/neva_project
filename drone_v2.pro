@@ -25,3 +25,6 @@ HEADERS += \
     database/database.h \
     database/pointsmodel.h \
     database/tracksmodel.h
+
+DISTFILES += \
+    database/DataBase.db

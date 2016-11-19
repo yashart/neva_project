@@ -98,14 +98,10 @@ Map {
         id: secondView
         model: pointsModel
         delegate: MapQuickItem {
-            anchorPoint.x: image.width/4
-            anchorPoint.y: image.height
-
             coordinate: QtPositioning.coordinate(lat, lon)
 
             sourceItem: Image {
-                id: image
-                source: "qrc:/img/photo.png"
+                source: "/img/photo.png"
             }
 
             property var image_src: -1
@@ -118,7 +114,7 @@ Map {
                     image_src = comment;
                     var true_src = comment;
                     console.log(comment)
-                    pictureWindow.changeImageSource("file:///D:/DSC00854.JPG", "DSC00854.JPG");
+                    pictureWindow.changeImageSource("file:///home/yashart/Documents/Programming/QT/exampleImages/DSC00854.jpg", "DSC00854.jpg");
                     console.log(pointsModel.rowCount())
                 }
             }
