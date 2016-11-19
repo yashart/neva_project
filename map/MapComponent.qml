@@ -114,7 +114,7 @@ Map {
                     image_src = comment;
                     var true_src = comment;
                     console.log(comment)
-                    pictureWindow.changeImageSource("file:///home/yashart/Documents/Programming/QT/exampleImages/DSC00854.jpg", "DSC00854.jpg");
+                    pictureWindow.changeImageSource("file:///home/yashart/Pictures/first_fly/" + comment, comment);
                     console.log(pointsModel.rowCount())
                 }
             }
