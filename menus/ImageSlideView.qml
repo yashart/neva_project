@@ -22,6 +22,7 @@ ScrollView {
                         smooth: false
                     }
                     onClicked: {
+                        console.log("file:///" + dir + url);
                         pictureWindow.changeImageSource("file:///" + dir + url, url);
                     }
                 }

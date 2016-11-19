@@ -109,6 +109,7 @@ Map {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
+                    imagesModel.updateModel()
                     pictureWindow.data;
                     pictureWindow.visible = true;
                     image_src = url;
