@@ -64,25 +64,33 @@ double DataBase::getAvgLon(int track_id)
     return -1; //ошибка
 }
 
-void DataBase::printPoints()
+void DataBase::createLocalPoint(double lat, double lon, QString type)
 {
     QSqlQuery query;
-    query.prepare("SELECT track_id, lat, lon, alt, comment, type FROM Points WHERE track_id = 1");
+    query.prepare("INSERT INTO LocationsPoints (lat, lon, type) VALUES (:lat, :lon, :type);");
+    query.bindValue(":lat", lat);
+    query.bindValue(":lon", lon);
+    query.bindValue(":type", type);
+
     if (!query.exec()){
-        qDebug() << "Error:" << query.lastError().text();
+        qDebug() << "Error SQLite:" << query.lastError().text();
+    }
+    emit updateLocationsModel();
+}
+
+void DataBase::deleteLocalPoint(int id)
+{
+    QSqlQuery query;
+    query.prepare("DELETE FROM LocationsPoints WHERE LocationsPoints.id = :id;");
+    query.bindValue(":id", id);
+    if (!query.exec()){
+        qDebug() << "Error SQLite:" << query.lastError().text();
     }
 
-    //Выводим значения из запроса
-    while (query.next())
-    {
-        QString id = query.value(0).toString().toLocal8Bit().constData();
-        QString lat = query.value(1).toString().toLocal8Bit().constData();
-        QString lon = query.value(2).toString().toLocal8Bit().constData();
-        QString alt = query.value(3).toString().toLocal8Bit().constData();
-        QString comment = query.value(4).toString().toLocal8Bit().constData();
-        QString type = query.value(5).toString().toLocal8Bit().constData();
-        qDebug() << id << " " << lat << " " << lon  << " "<< alt << " " << comment << " " << type << "\n";
-    }
+
+    qDebug() << query.lastQuery();
+    emit updateLocationsModel();
+    qDebug() << "++++++";
 }
 
 void DataBase::insertIntoTable(QString name)
@@ -94,6 +102,7 @@ void DataBase::insertIntoTable(QString name)
     if (!query.exec()){
         qDebug() << "Error SQLite:" << query.lastError().text();
     }
+
 }
 
 int DataBase::parseCSV(QString path)
@@ -127,3 +136,24 @@ int DataBase::parseCSV(QString path)
     qDebug() << "Hello";
     return 0;
 }
+
+/*void DataBase::printPoints()
+{
+    QSqlQuery query;
+    query.prepare("SELECT track_id, lat, lon, alt, comment, type FROM Points WHERE track_id = 1");
+    if (!query.exec()){
+        qDebug() << "Error:" << query.lastError().text();
+    }
+
+    //Выводим значения из запроса
+    while (query.next())
+    {
+        QString id = query.value(0).toString().toLocal8Bit().constData();
+        QString lat = query.value(1).toString().toLocal8Bit().constData();
+        QString lon = query.value(2).toString().toLocal8Bit().constData();
+        QString alt = query.value(3).toString().toLocal8Bit().constData();
+        QString comment = query.value(4).toString().toLocal8Bit().constData();
+        QString type = query.value(5).toString().toLocal8Bit().constData();
+        qDebug() << id << " " << lat << " " << lon  << " "<< alt << " " << comment << " " << type << "\n";
+    }
+}*/

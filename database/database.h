@@ -27,14 +27,17 @@ public:
     }
 
 signals:
+    void updateLocationsModel();
 
 public slots:
     void printTracks();
-    void printPoints();
+    //void printPoints();
     double getAvgLat(int track_id);
     double getAvgLon(int track_id);
     void insertIntoTable(QString name);
     int parseCSV(QString path);
+    void createLocalPoint(double lat, double lon, QString type);
+    void deleteLocalPoint(int id);
 };
 
 #endif // DATABASE_H

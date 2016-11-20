@@ -34,13 +34,10 @@ Map {
                 icon_src = toolBarMap.getActiveToolIcon();
                 type = toolBarMap.getActiveTool();
                 coordinates = map.toCoordinate(Qt.point(mouse.x,mouse.y));
-                locationsCoordinates.append({"lat": coordinates.latitude,
-                                             "lon": coordinates.longitude,
-                                             "type": type.toString(),
-                                             "icon_path": icon_src.toString()});
+
                 console.log(toolBarMap.getActiveToolIcon());
             }
-            if(toolBarMap.getActiveTool() == "remove_location" && mouse.button == Qt.LeftButton)
+            /*if(toolBarMap.getActiveTool() == "remove_location" && mouse.button == Qt.LeftButton)
             {
                 coordinates = map.toCoordinate(Qt.point(mouse.x,mouse.y));
                 var pointItem;
@@ -53,7 +50,7 @@ Map {
                     }
                 }
                 console.log("!");
-            }
+            }*/
             if(mouse.button == Qt.RightButton)
             {
                 map.popupX = mouse.x;
@@ -66,20 +63,25 @@ Map {
         }
     }
 
-    ListModel {
-        id: locationsCoordinates
-    }
     MapItemView {
         id: locationListView
 
-        model: locationsCoordinates
+        model: locationsModel
         delegate: MapQuickItem {
             coordinate {
                 latitude: lat
                 longitude: lon
             }
             sourceItem: Image {
-                source: icon_path
+                source: "qrc:///img/" + type + ".png"
+            }
+            MouseArea{
+                anchors.fill: parent;
+                onClicked: {
+                    if(toolBarMap.getActiveTool() == "remove_location" && mouse.button == Qt.LeftButton){
+                        dataBase.deleteLocalPoint(id);
+                    }
+                }
             }
         }
     }
@@ -132,14 +134,13 @@ Map {
     function toCoordinates(point){
         return map.toCoordinate(point);
     }
+
     function addPopupPoint(){
-        var icon_src = popupMapMenu.getActiveToolIcon();
-        var type = popupMapMenu.getActiveTool();
+        var icon_src = popupMapMenu.getActiveToolIcon(); //  qrc:///img/pikachu.png
+        var type = popupMapMenu.getActiveTool(); // pikachu
         var coordinates = map.toCoordinate(Qt.point(map.popupX,map.popupY));
-        locationsCoordinates.append({"lat": coordinates.latitude,
-                                     "lon": coordinates.longitude,
-                                     "type": type.toString(),
-                                     "icon_path": icon_src.toString()});
+        console.log(coordinates.latitude + " " + coordinates.longitude);
+        dataBase.createLocalPoint(coordinates.latitude, coordinates.longitude, type);
         popupMapMenu.visible = false;
     }
 }

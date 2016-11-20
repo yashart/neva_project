@@ -6,7 +6,7 @@
 #include "database/tracksmodel.h"
 #include "database/pointsmodel.h"
 #include "database/imagesmodel.h"
-#include <QDir>
+#include "database/locationsmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,11 +17,12 @@ int main(int argc, char *argv[])
     TracksModel tracksModel;
     PointsModel pointsModel;
     ImagesModel imagesModel;
+    LocationsModel locationsModel;
 
+    QObject::connect(&db, SIGNAL(updateLocationsModel()),
+                     &locationsModel, SLOT(updateModel()));
     //db.printTracks();
     //db.printPoints();
-
-    //qDebug() << QDir::currentPath();
 
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("tracksModel", &tracksModel);
     ctx->setContextProperty("pointsModel", &pointsModel);
     ctx->setContextProperty("imagesModel", &imagesModel);
+    ctx->setContextProperty("locationsModel", &locationsModel);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();
