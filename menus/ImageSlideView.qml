@@ -17,7 +17,7 @@ ScrollView {
                     anchors.fill: parent
                     Image {
                         anchors.fill: parent
-                        source: "file:///" + dir + url
+                        source: "qrc:/img/photo_example.jpg"
                         autoTransform: true
                         smooth: false
                     }
