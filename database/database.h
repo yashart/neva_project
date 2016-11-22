@@ -20,6 +20,7 @@ class DataBase : public QObject
     Q_OBJECT
 private:
     QSqlDatabase db;
+    int prepareDelete = 0;
 public:
     explicit DataBase(QObject *parent = 0);
     ~DataBase(){
@@ -37,7 +38,8 @@ public slots:
     void insertIntoTable(QString name);
     int parseCSV(QString path);
     void createLocalPoint(double lat, double lon, QString type);
-    void deleteLocalPoint(int id);
+    void prepareDeletePoint(int id);
+    void deleteLocalPoint();
 };
 
 #endif // DATABASE_H

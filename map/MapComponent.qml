@@ -25,32 +25,6 @@ Map {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
             popupMapMenu.visible = false;
-            var coordinates = 0;
-            var icon_src = "";
-            var type = "";
-            if((toolBarMap.getActiveTool() == "add_launcher" || toolBarMap.getActiveTool() == "add_tank")
-                    && (mouse.button == Qt.LeftButton))
-            {
-                icon_src = toolBarMap.getActiveToolIcon();
-                type = toolBarMap.getActiveTool();
-                coordinates = map.toCoordinate(Qt.point(mouse.x,mouse.y));
-
-                console.log(toolBarMap.getActiveToolIcon());
-            }
-            /*if(toolBarMap.getActiveTool() == "remove_location" && mouse.button == Qt.LeftButton)
-            {
-                coordinates = map.toCoordinate(Qt.point(mouse.x,mouse.y));
-                var pointItem;
-                for(var i = 0; i < locationsCoordinates.count; i++)
-                {
-                    pointItem = locationsCoordinates.get(i);
-                    if(((pointItem.lat - coordinates.latitude)*(pointItem.lat - coordinates.latitude) < 3e-7)&&
-                            ((pointItem.lon - coordinates.longitude)*(pointItem.lon - coordinates.longitude) < 3e-7)){
-                        locationsCoordinates.remove(i);
-                    }
-                }
-                console.log("!");
-            }*/
             if(mouse.button == Qt.RightButton)
             {
                 map.popupX = mouse.x;
@@ -78,8 +52,8 @@ Map {
             MouseArea{
                 anchors.fill: parent;
                 onClicked: {
-                    if(toolBarMap.getActiveTool() == "remove_location" && mouse.button == Qt.LeftButton){
-                        dataBase.deleteLocalPoint(id);
+                    if( mouse.button == Qt.LeftButton){
+                        dataBase.prepareDeletePoint(id);
                     }
                 }
             }
@@ -141,6 +115,7 @@ Map {
         var coordinates = map.toCoordinate(Qt.point(map.popupX,map.popupY));
         console.log(coordinates.latitude + " " + coordinates.longitude);
         dataBase.createLocalPoint(coordinates.latitude, coordinates.longitude, type);
+        dataBase.deleteLocalPoint(0);
         popupMapMenu.visible = false;
     }
 }

@@ -9,52 +9,62 @@ import "pages"
 
 
 ApplicationWindow {
-    visible: true
-    width: 640
-    height: 480
-    id: rootItem
     title: qsTr("Drone Neva Project v0.0.2")
 
     menuBar: mainMenu
     toolBar: toolBarMap
+    visible: true
+    width: 640
+    height: 480
+    id: rootItem
 
-    MainMenu {
-        id: mainMenu
-    }
-
-    OpenGPX {
-        id: openGPX
-    }
-
-    MakeGPX {
-        id: makeGPX
-    }
-
-    PageMap{
-        id: pageMap
+    FocusScope{
         anchors.fill: parent
-        visible: false
-    }
+        focus: true
+        Keys.onDeletePressed: {
+            console.log("Delete");
+            dataBase.deleteLocalPoint();
+            event.accepted = true;
+        }
 
-    PageAutorization{
-        id: pageAutorize
-        anchors.fill: parent
-        visible: true
-    }
+        MainMenu {
+            id: mainMenu
+        }
 
-    PopupMapMenu {
-        id: popupMapMenu
-        visible: false
-    }
+        OpenGPX {
+            id: openGPX
+        }
 
-    PictureWindow {
-        id: pictureWindow
-        visible: false
-    }
-    XmlModel {
-        id: xmlModel
-    }
-    TrackWindow{
-        id: trackWindow
+        MakeGPX {
+            id: makeGPX
+        }
+
+        PageMap{
+            id: pageMap
+            anchors.fill: parent
+            visible: false
+        }
+
+        PageAutorization{
+            id: pageAutorize
+            anchors.fill: parent
+            visible: true
+        }
+
+        PopupMapMenu {
+            id: popupMapMenu
+            visible: false
+        }
+
+        PictureWindow {
+            id: pictureWindow
+            visible: false
+        }
+        XmlModel {
+            id: xmlModel
+        }
+        TrackWindow{
+            id: trackWindow
+        }
     }
 }

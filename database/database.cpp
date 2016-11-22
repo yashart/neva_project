@@ -66,7 +66,7 @@ double DataBase::getAvgLon(int track_id)
 
 void DataBase::createLocalPoint(double lat, double lon, QString type)
 {
-   /*QSqlQuery query;
+   QSqlQuery query;
     query.prepare("INSERT INTO LocationsPoints (lat, lon, type) VALUES (:lat, :lon, :type);");
     query.bindValue(":lat", lat);
     query.bindValue(":lon", lon);
@@ -74,23 +74,28 @@ void DataBase::createLocalPoint(double lat, double lon, QString type)
 
     if (!query.exec()){
         qDebug() << "Error SQLite:" << query.lastError().text();
-    }*/
+    }
     emit updateLocationsModel();
 }
 
-void DataBase::deleteLocalPoint(int id)
+void DataBase::prepareDeletePoint(int id)
 {
-   /* QSqlQuery query;
+    this->prepareDelete = id;
+}
+
+void DataBase::deleteLocalPoint()
+{
+    QSqlQuery query;
     query.prepare("DELETE FROM LocationsPoints WHERE LocationsPoints.id = :id;");
-    query.bindValue(":id", id);
+    query.bindValue(":id", this->prepareDelete);
     if (!query.exec()){
         qDebug() << "Error SQLite:" << query.lastError().text();
     }
 
-
-    qDebug() << query.lastQuery();*/
+    qDebug() << query.lastQuery();
     emit updateLocationsModel();
-    //qDebug() << "++++++";
+    qDebug() << "++++++";
+    this->prepareDelete = 0;
 }
 
 void DataBase::insertIntoTable(QString name)
