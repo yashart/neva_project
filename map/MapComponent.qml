@@ -51,7 +51,7 @@ Map {
             { latitude: lat - ofLat, longitude: lon - ofLon},
             { latitude: lat - ofLat, longitude: lon + ofLon}
         ]
-        opacity: 0.1
+        opacity: 0.5
 }
 
     MapItemView {
@@ -77,11 +77,42 @@ Map {
         }
     }
 
-    MapPolyline {
-        id: track1
-        line.width: 3
-        line.color: 'blue'
+   /*MapItemView {
+        id: tracksLine
+
+        model: tracksModel
+        delegate: MapQuickItem {
+            coordinate {
+                latitude: points[0].latitude
+                longitude: points[0].longtitude
+            }
+            sourceItem: Image {
+                source: "qrc:///img/pikachu.png"
+            }
+            MouseArea{
+                anchors.fill: parent;
+                onClicked: {
+                    if( mouse.button == Qt.LeftButton){
+                    }
+                }
+            }
+        }
+    }*/
+
+    MapItemView{
+        id: tracksLines
+        model: tracksModel
+        delegate:
+            MapPolyline {
+            line.width: 3
+            line.color: 'red'
+            path: [
+                { latitude: points[0].latitude, longitude: points[0].longtitude},
+                { latitude: points[1].latitude, longitude: points[1].longtitude}
+            ]
+        }
     }
+
     function addTrack(path)
     {
         track1.path = path;

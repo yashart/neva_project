@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSqlQueryModel>
+#include <QList>
 
 class TracksModel : public QSqlQueryModel
 {
@@ -11,15 +12,16 @@ public:
     enum Roles {
         IdRole = Qt::UserRole + 1,
         NameRole,
-        PointRole
+        PointsRole
     };
 
     explicit TracksModel(QObject *parent = 0);
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 protected:
-    QVariantList list;
+    QVector<QVariantList> tracks;
     QHash<int, QByteArray> roleNames() const;
+    QVector<QVariantList>  getPointsOfTracks();
 
 signals:
 
