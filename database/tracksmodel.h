@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlQueryModel>
 #include <QList>
+#include <QJSEngine>
 
 class TracksModel : public QSqlQueryModel
 {

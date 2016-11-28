@@ -39,19 +39,21 @@ Map {
 
 
     MapPolygon{
+        id: viewPort
         property real lat: 55.92862
         property real lon: 37.520932
         property real ofLat: 0.00034
         property real ofLon: 0.0011
-
+        property real azimuth: 0
         color: 'green'
-        path: [
-            { latitude: lat+ofLat, longitude: lon + ofLon},
-            { latitude: lat+ofLat, longitude: lon - ofLon},
+        path: {[
+            { latitude: lat + ofLat, longitude: lon + ofLon},
+            { latitude: lat + ofLat, longitude: lon - ofLon},
             { latitude: lat - ofLat, longitude: lon - ofLon},
             { latitude: lat - ofLat, longitude: lon + ofLon}
-        ]
+        ]}
         opacity: 0.5
+        transform: Rotation {angle: viewPort.azimuth}
 }
 
     MapItemView {
@@ -63,7 +65,10 @@ Map {
                 latitude: lat
                 longitude: lon
             }
+            anchorPoint.x: markerCustomPoint.width / 2;
+            anchorPoint.y: markerCustomPoint.height / 2;
             sourceItem: Image {
+                id: markerCustomPoint
                 source: "qrc:///img/" + type + ".png"
             }
             MouseArea{
@@ -83,8 +88,8 @@ Map {
         model: tracksModel
         delegate: MapQuickItem {
             coordinate {
-                latitude: points[0].latitude
-                longitude: points[0].longtitude
+                latitude: 55.92862
+                longitude: 37.520932
             }
             sourceItem: Image {
                 source: "qrc:///img/pikachu.png"
@@ -93,25 +98,31 @@ Map {
                 anchors.fill: parent;
                 onClicked: {
                     if( mouse.button == Qt.LeftButton){
+                        var s = [
+                                { latitude: 50, longitude: 50},
+                                { latitude: 50, longitude: 50},
+                                { latitude: 50, longitude: 50},
+                                { latitude: 50, longitude: 50}
+                            ]
+
+                        console.log(s);
+                        console.log(points);
                     }
                 }
             }
         }
-    }*/
+    }
 
-    MapItemView{
+   MapItemView{
         id: tracksLines
         model: tracksModel
         delegate:
             MapPolyline {
             line.width: 3
             line.color: 'red'
-            path: [
-                { latitude: points[0].latitude, longitude: points[0].longtitude},
-                { latitude: points[1].latitude, longitude: points[1].longtitude}
-            ]
+            path: points
         }
-    }
+    }*/
 
     function addTrack(path)
     {
@@ -121,10 +132,13 @@ Map {
     MapItemView{
         id: secondView
         model: pointsModel
-        delegate: MapQuickItem {
-            coordinate: QtPositioning.coordinate(lat, lon)
 
+        delegate: MapQuickItem {
+            coordinate: QtPositioning.coordinate(lat, lon)    
+            anchorPoint.x: markerTrackPoint.width / 2;
+            anchorPoint.y: markerTrackPoint.height / 2;
             sourceItem: Image {
+                id: markerTrackPoint
                 source: "/img/photo.png"
             }
 
@@ -133,7 +147,8 @@ Map {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    imagesModel.updateModel()
+                    map.changeViewPortCenter(lat, lon, azimuth);
+                    imagesModel.updateModel();
                     pictureWindow.data;
                     pictureWindow.visible = true;
                     image_src = url;
@@ -149,6 +164,12 @@ Map {
     {
         map.center.latitude = lat;
         map.center.longitude = lon;
+    }
+    function changeViewPortCenter(lat, lon, azimuth)
+    {
+        viewPort.lat = lat;
+        viewPort.lon = lon;
+        viewPort.azimuth = azimuth;
     }
     function addUserPoint(pointData){
         locationsCoordinates.append(pointData);

@@ -3,7 +3,8 @@ import "../map"
 import "../menus"
 
 
-Item {
+Item
+{
     MapPlugin {
         id: mapPlugin
     }
@@ -24,6 +25,11 @@ Item {
     {
         mapComponent.changeMapCenter(lat, lon);
     }
+    function changeViewPortCenter(lat, lon, azimuth)
+    {
+        mapComponent.changeViewPortCenter(lat, lon, azimuth);
+    }
+
     function addUserPoint(pointData){
         mapComponent.addUserPoint(pointData);
     }

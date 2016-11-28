@@ -18,6 +18,7 @@ public:
         LatRole,
         LonRole,
         AltRole,
+        AngleRole,
         DirRole,
         URLRole,
         CommentRole,

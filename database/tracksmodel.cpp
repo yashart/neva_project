@@ -73,6 +73,7 @@ QVector<QVariantList> TracksModel::getPointsOfTracks()
        temp_tracks.push_back(path);
        // Сохраняем трек в список
     }
+
     return temp_tracks;
 }
 

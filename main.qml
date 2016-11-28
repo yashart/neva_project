@@ -31,9 +31,6 @@ ApplicationWindow {
             id: mainMenu
         }
 
-        OpenGPX {
-            id: openGPX
-        }
 
         MakeGPX {
             id: makeGPX

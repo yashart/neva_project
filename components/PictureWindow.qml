@@ -201,7 +201,7 @@ Window {
         {
             if(xmlModel.get(i).src == imageName)
             {
-                console.log("123");
+                console.log("123"); // Сомнительно место, которое, судя по всему не нужно
                 pageMap.changeMapCenter(xmlModel.get(i).lat, xmlModel.get(i).lon);
             }
         }
