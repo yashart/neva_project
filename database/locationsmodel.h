@@ -9,6 +9,8 @@ class LocationsModel : public QSqlQueryModel
     Q_OBJECT
 public:
     QStringList list_id;
+    QVariantList list;
+
     /* Перечисляем все роли, которые будут использоваться в TableView
      * Как видите, они должны лежать в памяти выше параметра Qt::UserRole
      * Связано с тем, что информация ниже этого адреса не для кастомизаций

@@ -37,6 +37,23 @@ Map {
         }
     }
 
+
+    MapPolygon{
+        property real lat: 55.92862
+        property real lon: 37.520932
+        property real ofLat: 0.00034
+        property real ofLon: 0.0011
+
+        color: 'green'
+        path: [
+            { latitude: lat+ofLat, longitude: lon + ofLon},
+            { latitude: lat+ofLat, longitude: lon - ofLon},
+            { latitude: lat - ofLat, longitude: lon - ofLon},
+            { latitude: lat - ofLat, longitude: lon + ofLon}
+        ]
+        opacity: 0.1
+}
+
     MapItemView {
         id: locationListView
 

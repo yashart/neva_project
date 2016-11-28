@@ -63,27 +63,14 @@ void LocationsModel::updateModel()
     str_query.append("LocationsPoints.lon, ");
     str_query.append("LocationsPoints.type ");
     str_query.append("FROM LocationsPoints; ");
-/*
-    for (int i = 0; i < list_id.size(); i++){
-        if (i == list_id.size() - 1) // обработка последнего элемента
-        {
-            str_query.append(QString("%1").arg(list_id.at(i)));
-        }
-        else
-        {
-            str_query.append(QString("%1, ").arg(list_id.at(i)));
-        }
-    }
-    str_query.append(") ORDER BY Points.track_id; ");*/
 
     this->setQuery(str_query);
 
-    /*while(this->canFetchMore()){ // загрузка всех данных в кэш
+    while(this->canFetchMore()){ // загрузка всех данных в кэш
         this->fetchMore();
-    }*/
+    }
 
     qDebug() << str_query << endl;
-    qDebug() << "End" << endl;
 }
 
 //Получение id из строки в модели представления данных

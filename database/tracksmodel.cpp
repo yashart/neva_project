@@ -4,6 +4,14 @@
 TracksModel::TracksModel(QObject *parent) :
     QSqlQueryModel(parent)
 {
+    for (int i = 0; i <=10; i++)
+    {
+        QVariantMap variant;
+        variant["one"] = QVariant(10 * i);
+        variant["two"] = QVariant(11 * i);
+        list.append(variant);
+
+    }
     this->updateModel();
 }
 
@@ -13,6 +21,11 @@ TracksModel::TracksModel(QObject *parent) :
 */
 QVariant TracksModel::data(const QModelIndex & index, int role) const {
 
+    //Если пришел запрос на массив, то досрочно его отдаем
+    if (role == PointRole)
+    {
+        return list;
+    }
     // Определяем номер колонки, адрес так сказать, по номеру роли
     int columnId = role - Qt::UserRole - 1;
     // Создаём индекс с помощью новоиспечённого ID колонки
@@ -32,6 +45,7 @@ QHash<int, QByteArray> TracksModel::roleNames() const {
     QHash<int, QByteArray> roles;
     roles[IdRole] = "id";
     roles[NameRole] = "name";
+    roles[PointRole] = "point";
     return roles;
 }
 

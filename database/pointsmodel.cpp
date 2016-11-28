@@ -13,6 +13,7 @@ PointsModel::PointsModel(QObject *parent) :
 */
 QVariant PointsModel::data(const QModelIndex & index, int role) const
 {
+    qDebug() << index.row();
     // Определяем номер колонки, адрес так сказать, по номеру роли
     int columnId = role - Qt::UserRole - 1;
     // Создаём индекс с помощью новоиспечённого ID колонки
