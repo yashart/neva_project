@@ -5,15 +5,18 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 import "../menus"
+import "../map"
 
 
-Window {
+Window {    
+    id:pichWidow
     visible: false
     title:qsTr("Picture Viewer")
     minimumWidth: 500
     minimumHeight: 460 + 220
     property var currentFrame: undefined
     property var surfaceViewportRatio: 3.0
+
     ColumnLayout {
         spacing: 2
         ToolBar {
@@ -152,9 +155,15 @@ Window {
                     autoTransform: true
                     fillMode: Image.PreserveAspectFit
                     MouseArea{
+                        id:imageArea
                         anchors.fill: parent
                         onClicked: {
-                            var coordinates = 0;
+                            popupMapMenu.visible = false;
+                            popupMapMenu.x = imageArea.mouseX + pichWidow.x;
+                            popupMapMenu.y = imageArea.mouseY + pichWidow.y + 70;
+                            popupMapMenu.visible = true;
+
+                            /*var coordinates = 0;
                             var icon_src = "";
                             var type = "";
                             if(windowToolsGroup.current.iconName == "add_tank" ||
@@ -163,15 +172,15 @@ Window {
                                 var k = 0.005;
                                 var offsetLat = ((mouseY / (height)) * k - (0.5 *k)) * (-1);
                                 var offsetLon = (mouseX / (width)) * k - (0.5 *k);
+                                console.log(mouseY, mouseX);
                                 icon_src = windowToolsGroup.current.iconSource;
                                 type = windowToolsGroup.current.iconName;
                                 coordinates = pageMap.toCoordinates(Qt.point(mouseX/scale, mouseY/scale));
                                 console.log(icon_src + " " + type + " " + coordinates.latitude);
                                 pageMap.addUserPoint({"lat": coordinates.latitude,
                                                              "lon": coordinates.longitude,
-                                                             "type": type.toString(),
-                                                             "icon_path": icon_src.toString()});
-                            }
+                                                             "type": type.toString()});
+                            }*/
                         }
                     }
                 }

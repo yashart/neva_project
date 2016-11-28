@@ -47,14 +47,12 @@ ApplicationWindow {
             anchors.fill: parent
             visible: true
         }
-
-        PopupMapMenu {
-            id: popupMapMenu
-            visible: false
-        }
-
         PictureWindow {
             id: pictureWindow
+            visible: false
+        }
+        PopupMapMenu {
+            id: popupMapMenu
             visible: false
         }
         XmlModel {

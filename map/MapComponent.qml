@@ -37,24 +37,17 @@ Map {
         }
     }
 
-
     MapPolygon{
         id: viewPort
-        property real lat: 55.92862
-        property real lon: 37.520932
-        property real ofLat: 0.00034
-        property real ofLon: 0.0011
-        property real azimuth: 0
         color: 'green'
-        path: {[
-            { latitude: lat + ofLat, longitude: lon + ofLon},
-            { latitude: lat + ofLat, longitude: lon - ofLon},
-            { latitude: lat - ofLat, longitude: lon - ofLon},
-            { latitude: lat - ofLat, longitude: lon + ofLon}
-        ]}
         opacity: 0.5
-        transform: Rotation {angle: viewPort.azimuth}
-}
+        path: [
+            { latitude: 0, longitude: 0},
+            { latitude: 0, longitude: 0},
+            { latitude: 0, longitude: 0},
+            { latitude: 0, longitude: 0}
+        ]
+    }
 
     MapItemView {
         id: locationListView
@@ -124,6 +117,18 @@ Map {
         }
     }*/
 
+    MapPolyline{
+        id: lookAt
+        line.width: 3
+        line.color: 'red'
+        path:[
+            { latitude: 0, longitude: 0},
+            { latitude: 0, longitude: 0},
+        ]
+
+    }
+
+
     function addTrack(path)
     {
         track1.path = path;
@@ -167,10 +172,59 @@ Map {
     }
     function changeViewPortCenter(lat, lon, azimuth)
     {
-        viewPort.lat = lat;
-        viewPort.lon = lon;
-        viewPort.azimuth = azimuth;
+        console.log(azimuth);
+        azimuth = azimuth;
+
+        var offsetLat = 0.00034; // эксперементальным путем
+        var offsetLon = 0.0011; // эксперементальным путем
+
+        var offset = viewPort.path;
+        offset[0].latitude = offsetLat;
+        offset[0].longitude = offsetLon;
+        offset[1].latitude = offsetLat;
+        offset[1].longitude = - offsetLon;
+        offset[2].latitude = - offsetLat;
+        offset[2].longitude = - offsetLon;
+        offset[3].latitude = - offsetLat;
+        offset[3].longitude = offsetLon;
+
+        var path = viewPort.path;
+        for (var i = 0; i <= 3; i++){
+            var ofLat = offset[i].latitude;
+            var ofLon = offset[i].longitude;
+            path[i].latitude = lat + rotLat(ofLat, ofLon, azimuth);
+            path[i].longitude = lon + rotLon(ofLat, ofLon, azimuth);
+        }
+        viewPort.path = path;
+
+        offset = lookAt.path;
+        offset[0].latitude = lat;
+        offset[0].longitude = lon;
+        offset[1].latitude = lat + rotLat(offsetLat, 0, azimuth);
+        offset[1].longitude = lon + rotLon(offsetLat, 0, azimuth);;
+        lookAt.path = offset;
+        console.log(offset);
     }
+
+    function rotLat(lat, lon, angle)
+    {
+        angle = toRad(angle);
+        return lat * Math.cos(angle) - lon * Math.sin(angle);
+    }
+    function rotLon(lat, lon, angle)
+    {
+        angle = toRad(angle);
+        return lat * Math.sin(angle) + lon * Math.cos(angle);
+    }
+
+    function toDeg (angle) {
+      return angle * (180 / Math.PI);
+    }
+
+    function toRad (angle) {
+      return angle * (Math.PI / 180);
+    }
+
     function addUserPoint(pointData){
         locationsCoordinates.append(pointData);
     }
