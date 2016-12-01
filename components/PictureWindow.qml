@@ -148,7 +148,6 @@ Window {
 
                 Image {
                     id: image
-                    anchors.centerIn: photoFrame
                     width: pictureWindow.width
                     height: pictureWindow.height - imageSlideView.height - 50
                     source: "../img/photo_example.jpg"

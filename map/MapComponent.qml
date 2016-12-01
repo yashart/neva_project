@@ -75,7 +75,7 @@ Map {
         }
     }
 
-   /*MapItemView {
+   MapItemView {
         id: tracksLine
 
         model: tracksModel
@@ -90,17 +90,7 @@ Map {
             MouseArea{
                 anchors.fill: parent;
                 onClicked: {
-                    if( mouse.button == Qt.LeftButton){
-                        var s = [
-                                { latitude: 50, longitude: 50},
-                                { latitude: 50, longitude: 50},
-                                { latitude: 50, longitude: 50},
-                                { latitude: 50, longitude: 50}
-                            ]
-
-                        console.log(s);
-                        console.log(points);
-                    }
+                    console.log(points);
                 }
             }
         }
@@ -111,11 +101,11 @@ Map {
         model: tracksModel
         delegate:
             MapPolyline {
-            line.width: 3
+            line.width: 1
             line.color: 'red'
             path: points
         }
-    }*/
+    }
 
     MapPolyline{
         id: lookAt

@@ -8,7 +8,6 @@ class PointsModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
-    QStringList list_id;
     /* Перечисляем все роли, которые будут использоваться в TableView
      * Как видите, они должны лежать в памяти выше параметра Qt::UserRole
      * Связано с тем, что информация ниже этого адреса не для кастомизаций
@@ -32,6 +31,7 @@ public:
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 protected:
+    QStringList list_id;
     /* хешированная таблица ролей для колонок.
      * Метод используется в дебрях базового класса QAbstractItemModel,
      * от которого наследован класс QSqlQueryModel
@@ -39,6 +39,7 @@ protected:
     QHash<int, QByteArray> roleNames() const;
 
 signals:
+    void setTracksId(QStringList ids);
 
 public slots:
     void updateModel();

@@ -69,7 +69,7 @@ Window {
                     if (checked == false){
                         pointsModel.delId(id);
                     }
-                    pointsModel.updateModel()
+                    pointsModel.updateModel();
                 }
                 MouseArea {
                     anchors.fill: parent

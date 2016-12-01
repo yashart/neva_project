@@ -27,6 +27,7 @@ QVariant PointsModel::data(const QModelIndex & index, int role) const
 void PointsModel::addId(QString new_id)
 {
     list_id.append(new_id);
+    emit setTracksId(list_id);
 
 }
 
@@ -37,7 +38,7 @@ void PointsModel::delId(QString del_id)
         {
             list_id.removeAt(i);
         }
-
+    emit setTracksId(list_id);
 }
 
 //Метод для получения имен ролей через хешированную таблицу.
@@ -77,7 +78,7 @@ void PointsModel::updateModel()
     str_query.append("WHERE Points.track_id IN (");
 
     for (int i = 0; i < list_id.size(); i++){
-        if (i == list_id.size() - 1) // обработка последнего элемента
+        if (i == list_id.size() - 1) // обработка последнего элемента списка
         {
             str_query.append(QString("%1").arg(list_id.at(i)));
         }

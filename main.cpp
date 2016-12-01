@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 
     QObject::connect(&db, SIGNAL(updateLocationsModel()),
                      &locationsModel, SLOT(updateModel()));
+    QObject::connect(&pointsModel, PointsModel::setTracksId,
+                     &tracksModel, TracksModel::recvTracksId);
     //db.printTracks();
     //db.printPoints();
 

@@ -5,6 +5,7 @@
 #include <QSqlQueryModel>
 #include <QList>
 #include <QJSEngine>
+#include <QGeoCoordinate>
 
 class TracksModel : public QSqlQueryModel
 {
@@ -20,15 +21,17 @@ public:
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 protected:
+    QStringList tracksIdList;
     QVector<QVariantList> tracks;
     QHash<int, QByteArray> roleNames() const;
-    QVector<QVariantList>  getPointsOfTracks();
+    QVector<QVariantList> getPointsOfTracks();
 
 signals:
 
 public slots:
     void updateModel();
     int getId(int row);
+    void recvTracksId(QStringList ids);
 };
 
 #endif // TRACKSMODEL_H
