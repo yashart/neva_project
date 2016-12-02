@@ -67,10 +67,12 @@ Window {
                     if (checked == true){
                         pointsModel.addId(id);
                         tracksModel.setChecked(id);
+                        linesModel.addId(id);
                     }
                     if (checked == false){
                         pointsModel.delId(id);
                         tracksModel.setUnchecked(id);
+                        linesModel.delId(id);
                     }
                     pointsModel.updateModel();
                     tracksModel.updateModel();

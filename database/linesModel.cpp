@@ -16,7 +16,7 @@ QVariant LinesModel::data(const QModelIndex & index, int role) const {
     //Если пришел запрос на массив, то досрочно его отдаем
     if (role == PointsRole)
     {
-        return this->tracks[0];
+        return this->tracks[index.row()];
     }
 
     // Определяем номер колонки, адрес так сказать, по номеру роли
@@ -28,6 +28,22 @@ QVariant LinesModel::data(const QModelIndex & index, int role) const {
      * вытаскиваем данные для таблицы из модели
      * */
     return QSqlQueryModel::data(modelIndex, Qt::DisplayRole);
+}
+
+void LinesModel::addId(QString new_id)
+{
+    list_id.append(new_id);
+    this->updateModel();
+}
+
+void LinesModel::delId(QString del_id)
+{
+    for (int i = 0; i < list_id.size(); i++)
+        if (list_id.at(i) == del_id)
+        {
+            list_id.removeAt(i);
+        }
+    this->updateModel();
 }
 
 // Метод для получения имен ролей через хешированную таблицу.
@@ -47,36 +63,35 @@ void LinesModel::updateModel()
 {
     this->tracks = this->getPointsOfTracks();
     // Обновление производится SQL-запросом к базе данных
-    QString str_query("SELECT id, name FROM Tracks;");
-    this->setQuery(str_query);
-}
+    QString str_query("SELECT id, name FROM Tracks ");
+    str_query.append("WHERE Tracks.id IN (");
 
-void LinesModel::addId(QString new_id)
-{
-    list_id.append(new_id);
-
-}
-
-void LinesModel::delId(QString del_id)
-{
-    for (int i = 0; i < list_id.size(); i++)
-        if (list_id.at(i) == del_id)
+    for (int i = 0; i < list_id.size(); i++){
+        if (i == list_id.size() - 1) // обработка последнего элемента списка
         {
-            list_id.removeAt(i);
+            str_query.append(QString("%1").arg(list_id.at(i)));
         }
+        else
+        {
+            str_query.append(QString("%1, ").arg(list_id.at(i)));
+        }
+    }
+    str_query.append("); ");
+
+    this->setQuery(str_query);
 }
 
 QVector<QVariantList> LinesModel::getPointsOfTracks()
 {
     QVector<QVariantList> list;
 
-    //for (int i = 0; i < this->tracksIdList.size(); i++)
-    //{
-        qDebug() << ">>>>>>>" <<  "ПРИВЕТ";
+    for (int i = 0; i < this->list_id.size(); i++)
+    {
         QSqlQuery query;
 
         query.prepare("SELECT lat, lon FROM Points WHERE Points.track_id = :track_id");
-        query.bindValue(":track_id", 1/*tracksIdList.at(1)*/);
+        query.bindValue(":track_id", list_id.at(i));
+        qDebug() << "Работает" <<  list_id.at(i);
         if (!query.exec()){
             qDebug() << "Error:" << query.lastError().text();
         }
@@ -92,7 +107,7 @@ QVector<QVariantList> LinesModel::getPointsOfTracks()
         }
         list.push_back(path);
 
-    //}
+    }
 
     return list;
 }

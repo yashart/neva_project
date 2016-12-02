@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QSqlQueryModel>
 #include <QList>
-#include <QJSEngine>
 #include <QGeoCoordinate>
 
 class LinesModel : public QSqlQueryModel

@@ -24,22 +24,6 @@ QVariant LocationsModel::data(const QModelIndex & index, int role) const
     return QSqlQueryModel::data(modelIndex, Qt::DisplayRole);
 }
 
-void LocationsModel::addId(QString new_id)
-{
-    list_id.append(new_id);
-
-}
-
-void LocationsModel::delId(QString del_id)
-{
-    for (int i = 0; i < list_id.size(); i++)
-        if (list_id.at(i) == del_id)
-        {
-            list_id.removeAt(i);
-        }
-
-}
-
 //Метод для получения имен ролей через хешированную таблицу.
 QHash<int, QByteArray> LocationsModel::roleNames() const {
     /* То есть сохраняем в хеш-таблицу названия ролей

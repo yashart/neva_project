@@ -8,7 +8,6 @@ class LocationsModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
-    QStringList list_id;
     QVariantList list;
 
     /* Перечисляем все роли, которые будут использоваться в TableView
@@ -39,8 +38,6 @@ signals:
 
 public slots:
     void updateModel();
-    void addId(QString new_id);
-    void delId(QString del_id);
     int getId(int row);
 };
 

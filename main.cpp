@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
 
     QObject::connect(&db, SIGNAL(updateLocationsModel()),
                      &locationsModel, SLOT(updateModel()));
-    //db.printTracks();
-    //db.printPoints();
 
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

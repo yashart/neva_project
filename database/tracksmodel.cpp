@@ -78,17 +78,14 @@ void TracksModel::setUnchecked(int id)
 void TracksModel::recvTracksId(QStringList ids)
 {
     this->tracksIdList = ids;
-    qDebug() << ">>>>>>>" <<  this->tracksIdList.size();
 }
 
 QVector<QVariantList> TracksModel::getPointsOfTracks()
 {
     QVector<QVariantList> list;
 
-    qDebug() << ">>>>>>>" <<  tracksIdList.size();
     //for (int i = 0; i < this->tracksIdList.size(); i++)
     //{
-        qDebug() << ">>>>>>>" <<  "ПРИВЕТ";
         QSqlQuery query;
 
         query.prepare("SELECT lat, lon FROM Points WHERE Points.track_id = :track_id");
