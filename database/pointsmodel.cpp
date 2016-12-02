@@ -94,8 +94,6 @@ void PointsModel::updateModel()
     while(this->canFetchMore()){ // загрузка всех данных в кэш
         this->fetchMore();
     }
-
-    qDebug() << str_query << endl;
 }
 
 //Получение id из строки в модели представления данных

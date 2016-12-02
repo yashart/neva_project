@@ -45,7 +45,7 @@ public slots:
     void updateModel();
     void addId(QString new_id);
     void delId(QString del_id);
-    int getId(int row);
+    int  getId(int row);
 };
 
 #endif // POINTSMODEL_H

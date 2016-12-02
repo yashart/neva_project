@@ -1,7 +1,7 @@
 #include "database.h"
-#include "tracksmodel.h"
+#include "linesmodel.h"
 
-TracksModel::TracksModel(QObject *parent) :
+LinesModel::LinesModel(QObject *parent) :
     QSqlQueryModel(parent)
 {
     this->updateModel();
@@ -11,12 +11,11 @@ TracksModel::TracksModel(QObject *parent) :
  * Вообще этот метод создан для QML. Именно он его скрытно
  * использует
 */
-QVariant TracksModel::data(const QModelIndex & index, int role) const {
+QVariant LinesModel::data(const QModelIndex & index, int role) const {
 
     //Если пришел запрос на массив, то досрочно его отдаем
     if (role == PointsRole)
     {
-        qDebug() << "Пытаются докапаться до " << index.row();
         return this->tracks[0];
     }
 
@@ -32,60 +31,45 @@ QVariant TracksModel::data(const QModelIndex & index, int role) const {
 }
 
 // Метод для получения имен ролей через хешированную таблицу.
-QHash<int, QByteArray> TracksModel::roleNames() const {
+QHash<int, QByteArray> LinesModel::roleNames() const {
     /* То есть сохраняем в хеш-таблицу названия ролей
      * по их номеру
      * */
     QHash<int, QByteArray> roles;
     roles[IdRole] = "id";
     roles[NameRole] = "name";
-    roles[CheckRole] = "is_check";
     roles[PointsRole] = "points";
     return roles;
 }
 
 // Метод обновления таблицы в модели представления данных
-void TracksModel::updateModel()
+void LinesModel::updateModel()
 {
     this->tracks = this->getPointsOfTracks();
     // Обновление производится SQL-запросом к базе данных
-    QString str_query("SELECT id, name, is_check FROM Tracks;");
+    QString str_query("SELECT id, name FROM Tracks;");
     this->setQuery(str_query);
 }
 
-void TracksModel::setChecked(int id)
+void LinesModel::addId(QString new_id)
 {
-    QSqlQuery query;
-    query.prepare("UPDATE Tracks SET is_check = 'true' WHERE id = :id ");
-    query.bindValue(":id", id);
+    list_id.append(new_id);
 
-    if (!query.exec()){
-        qDebug() << "Error SQLite:" << query.lastError().text();
-    }
 }
 
-void TracksModel::setUnchecked(int id)
+void LinesModel::delId(QString del_id)
 {
-    QSqlQuery query;
-    query.prepare("UPDATE Tracks SET is_check = 'false' WHERE id = :id ");
-    query.bindValue(":id", id);
-
-    if (!query.exec()){
-        qDebug() << "Error SQLite:" << query.lastError().text();
-    }
+    for (int i = 0; i < list_id.size(); i++)
+        if (list_id.at(i) == del_id)
+        {
+            list_id.removeAt(i);
+        }
 }
 
-void TracksModel::recvTracksId(QStringList ids)
-{
-    this->tracksIdList = ids;
-    qDebug() << ">>>>>>>" <<  this->tracksIdList.size();
-}
-
-QVector<QVariantList> TracksModel::getPointsOfTracks()
+QVector<QVariantList> LinesModel::getPointsOfTracks()
 {
     QVector<QVariantList> list;
 
-    qDebug() << ">>>>>>>" <<  tracksIdList.size();
     //for (int i = 0; i < this->tracksIdList.size(); i++)
     //{
         qDebug() << ">>>>>>>" <<  "ПРИВЕТ";
@@ -111,42 +95,11 @@ QVector<QVariantList> TracksModel::getPointsOfTracks()
     //}
 
     return list;
-
-    /*QVariantList path;
-    QGeoCoordinate coordinate(55.924449, 37.510043);
-    path.append(QVariant::fromValue(coordinate));
-    coordinate = QGeoCoordinate(55.948002, 37.558683);
-    path.append(QVariant::fromValue(coordinate));
-    */
 }
 
-/*QVector<QVariantList> TracksModel::getPointsOfTracks()
-{
-    QVector<QVariantList> temp_tracks;
-    for (int i = 0; i <= 3; i++) // обрабатываем каждый трек
-    {
-       QVariantList path;
-//       for(int j = 0; j <= 10; j++) // ззаполняем массив с точками одного трека
-//       {
-           QVariantMap point;
-           point["latitude"] = QVariant(55.928848 + (0.000680 * i));
-           point["longtitude"] = QVariant(37.519537 + (0.002200 * i));
-           path.append(point);
-
-           QVariantMap point2;
-           point2["latitude"] = QVariant(55.928169 + (0.000680 * i));
-           point2["longtitude"] = QVariant(37.521683 + (0.002200 * i));
-           path.append(point2);
-       //}push_back(path);
-       temp_tracks.
-       // Сохраняем трек в список
-    }
-
-    return temp_tracks;
-}*/
 
 // Получение id из строки в модели представления данных
-int TracksModel::getId(int row)
+int LinesModel::getId(int row)
 {
     return this->data(this->index(row, 0), IdRole).toInt();
 }

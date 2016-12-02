@@ -75,7 +75,7 @@ Map {
         }
     }
 
-   MapItemView {
+   /*MapItemView {
         id: tracksLine
 
         model: tracksModel
@@ -94,15 +94,15 @@ Map {
                 }
             }
         }
-    }
+    }*/
 
    MapItemView{
         id: tracksLines
-        model: tracksModel
+        model: linesModel
         delegate:
             MapPolyline {
-            line.width: 1
-            line.color: 'red'
+            line.width: 2
+            line.color: 'green'
             path: points
         }
     }
@@ -132,6 +132,7 @@ Map {
             coordinate: QtPositioning.coordinate(lat, lon)    
             anchorPoint.x: markerTrackPoint.width / 2;
             anchorPoint.y: markerTrackPoint.height / 2;
+            opacity:0
             sourceItem: Image {
                 id: markerTrackPoint
                 source: "/img/photo.png"
@@ -141,6 +142,15 @@ Map {
 
             MouseArea{
                 anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    parent.opacity = 1;
+                }
+
+                onExited: {
+                    parent.opacity = 0;
+                }
                 onClicked: {
                     map.changeViewPortCenter(lat, lon, azimuth);
                     imagesModel.updateModel();
