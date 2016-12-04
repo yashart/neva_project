@@ -35,5 +35,8 @@
         <file>img/track_icon/del24.png</file>
         <file>img/track_icon/plus24.png</file>
         <file>img/track_icon/edit24.png</file>
+        <file>img/scan.png</file>
+        <file>img/ruler.png</file>
+        <file>img/protractor.png</file>
     </qresource>
 </RCC>
