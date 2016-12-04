@@ -1,5 +1,5 @@
 #include "database.h"
-#include "linesmodel.h"
+#include "linesModel.h"
 
 LinesModel::LinesModel(QObject *parent) :
     QSqlQueryModel(parent)
