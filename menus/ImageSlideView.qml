@@ -26,7 +26,7 @@ ScrollView {
                         pageMap.changeMapCenter(lat, lon);
                         pageMap.changeViewPortCenter(lat, lon);
                         console.log("file:///" + dir + url);
-                        pictureWindow.changeImageSource("file:///" + dir + url, url);
+                        pictureWindow.changeImageSource("file:///" + dir + url, url, 0, lat, lon);
                     }
                 }
             }

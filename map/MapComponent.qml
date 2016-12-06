@@ -31,6 +31,8 @@ Map {
                 map.popupY = mouse.y;
                 popupMapMenu.x = mouse.x + rootItem.x;
                 popupMapMenu.y = mouse.y + rootItem.y;
+                popupMapMenu.setCoordinates(map.toCoordinate(
+                                                Qt.point(mouseX, mouseY)));
                 popupMapMenu.visible = true;
                 console.log("Right button: " + map.popupX + " " + map.popupY);
             }
@@ -157,8 +159,9 @@ Map {
                     pictureWindow.data;
                     pictureWindow.visible = true;
                     image_src = url;
-                    pictureWindow.changeImageSource("file:///" + dir + url, url);
+                    pictureWindow.changeImageSource("file:///" + dir + url, url, azimuth, lat, lon);
                     console.log("file:///" + dir + url);
+                    console.log(azimuth);
                 }
             }
         }
@@ -232,12 +235,10 @@ Map {
         return map.toCoordinate(point);
     }
 
-    function addPopupPoint(){
+    function addPopupPoint(lon, lat){
         var icon_src = popupMapMenu.getActiveToolIcon(); //  qrc:///img/pikachu.png
         var type = popupMapMenu.getActiveTool(); // pikachu
-        var coordinates = map.toCoordinate(Qt.point(map.popupX,map.popupY));
-        console.log(coordinates.latitude + " " + coordinates.longitude);
-        dataBase.createLocalPoint(coordinates.latitude, coordinates.longitude, type);
+        dataBase.createLocalPoint(lat, lon, type);
         dataBase.deleteLocalPoint(0);
         popupMapMenu.visible = false;
     }

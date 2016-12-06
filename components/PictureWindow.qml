@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
+import QtPositioning 5.2
 
 import "../menus"
 import "../map"
@@ -33,6 +34,10 @@ Window {
                 autoTransform: true
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
+
+                property var lat: 0
+                property var lon: 0
+                property var azimuth: 0
                 MouseArea {
                     id: dragArea
                     hoverEnabled: true
@@ -55,6 +60,13 @@ Window {
                         popupMapMenu.visible = false;
                         popupMapMenu.x = dragArea.mouseX + pichWidow.x;
                         popupMapMenu.y = dragArea.mouseY + pichWidow.y + 70;
+                        console.log(dragArea.mouseX + " 12314 " + dragArea.mouseY);
+                        var offsetLon = 0.00034; // эксперементальным путем
+                        var offsetLat = 0.0022; // эксперементальным путем
+                        popupMapMenu.setCoordinates(
+                                    QtPositioning.coordinate(
+                                        image.lat + (dragArea.mouseX-image.paintedWidth/2)/image.paintedWidth*offsetLat,
+                                        image.lon + (dragArea.mouseY-image.paintedHeight/2)/image.paintedHeight*offsetLon));
                         popupMapMenu.visible = true;
                     }
                 }
@@ -78,17 +90,16 @@ Window {
     {
         imageSlideView.addPicture(source);
     }
-    function changeImageSource(source, imageName)
+    function changeImageSource(source, imageName, azimuth, lat, lon)
     {
         image.source = source;
-        for(var i = 0; i < xmlModel.count; i++)
-        {
-            if(xmlModel.get(i).src == imageName)
-            {
-                console.log("123"); // Сомнительно место, которое, судя по всему не нужно
-                pageMap.changeMapCenter(xmlModel.get(i).lat, xmlModel.get(i).lon);
-            }
-        }
+        image.azimuth = azimuth;
+        image.lat = lat;
+        image.lon = lon;
+        image.rotation = azimuth;
+        image.x = photoFrame.x;
+        image.y = photoFrame.y;
+        image.scale = 1;
     }
     function getFolderSource()
     {

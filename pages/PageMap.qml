@@ -36,9 +36,9 @@ Item
     function toCoordinates(point){
         return mapComponent.toCoordinates(point);
     }
-    function addPopupPoint()
+    function addPopupPoint(lon, lat)
     {
-        mapComponent.addPopupPoint();
+        mapComponent.addPopupPoint(lon, lat);
     }
 
 }
