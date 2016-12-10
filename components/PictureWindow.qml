@@ -34,15 +34,30 @@ Window {
                 autoTransform: true
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
+                z: 1
 
                 property var lat: 0
                 property var lon: 0
                 property var azimuth: 0
+                ListView {
+                    anchors.fill: image
+                    id: pointsOnPicture
+
+                    model: pointsPhotoModel
+                    delegate: Image {
+                        x: ((lat - image.lat)/dragArea.offsetLat + 0.5) * image.paintedWidth
+                        y: ((lon - image.lon)/dragArea.offsetLat + 0.5) * image.paintedHeight
+                        z: 0
+                        source: "qrc:///img/" + type + ".png"
+                    }
+                }
                 MouseArea {
                     id: dragArea
                     hoverEnabled: true
                     anchors.fill: parent
                     drag.target: image
+                    property var offsetLon: 0.00034 // эксперементальным путем
+                    property var offsetLat: 0.0022 // эксперементальным путем
                     onWheel: {
                         if (wheel.modifiers & Qt.ControlModifier) {
                             image.rotation += wheel.angleDelta.y / 120 * 5;
@@ -61,8 +76,6 @@ Window {
                         popupMapMenu.x = dragArea.mouseX + pichWidow.x;
                         popupMapMenu.y = dragArea.mouseY + pichWidow.y + 70;
                         console.log(dragArea.mouseX + " 12314 " + dragArea.mouseY);
-                        var offsetLon = 0.00034; // эксперементальным путем
-                        var offsetLat = 0.0022; // эксперементальным путем
                         popupMapMenu.setCoordinates(
                                     QtPositioning.coordinate(
                                         image.lat + (dragArea.mouseX-image.paintedWidth/2)/image.paintedWidth*offsetLat,
@@ -96,7 +109,7 @@ Window {
         image.azimuth = azimuth;
         image.lat = lat;
         image.lon = lon;
-        image.rotation = azimuth;
+        image.rotation = 180 + azimuth;
         image.x = photoFrame.x;
         image.y = photoFrame.y;
         image.scale = 1;

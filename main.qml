@@ -49,7 +49,7 @@ ApplicationWindow {
         }
         PictureWindow {
             id: pictureWindow
-            visible: true
+            visible: false
         }
         PopupMapMenu {
             id: popupMapMenu

@@ -154,6 +154,7 @@ Map {
                     parent.opacity = 0;
                 }
                 onClicked: {
+                    pointsPhotoModel.setCenter(lat, lon);
                     map.changeViewPortCenter(lat, lon, azimuth);
                     imagesModel.updateModel();
                     pictureWindow.data;
