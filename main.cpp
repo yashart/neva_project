@@ -8,6 +8,7 @@
 #include "database/imagesmodel.h"
 #include "database/locationsmodel.h"
 #include "database/linesModel.h"
+#include "database/pointsphotomodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     ImagesModel imagesModel;
     LocationsModel locationsModel;
     LinesModel linesModel;
+    PointsPhotoModel pointsPhotoModel;
 
     QObject::connect(&db, SIGNAL(updateLocationsModel()),
                      &locationsModel, SLOT(updateModel()));
@@ -38,6 +40,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("imagesModel", &imagesModel);
     ctx->setContextProperty("locationsModel", &locationsModel);
     ctx->setContextProperty("linesModel", &linesModel);
+    ctx->setContextProperty("pointsPhotoModel", &pointsPhotoModel);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();

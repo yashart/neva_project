@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     database/tracksmodel.cpp \
     database/imagesmodel.cpp \
     database/locationsmodel.cpp \
-    database/linesModel.cpp
+    database/linesModel.cpp \
+    database/pointsphotomodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,7 +31,8 @@ HEADERS += \
     database/tracksmodel.h \
     database/imagesmodel.h \
     database/locationsmodel.h \
-    database/linesModel.h
+    database/linesModel.h \
+    database/pointsphotomodel.h
 
 DISTFILES += \
     database/DataBase.db

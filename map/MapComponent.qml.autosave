@@ -170,6 +170,7 @@ Map {
 
                 onEntered: {
                     parent.opacity = 1;
+                    
                 }
 
                 onExited: {
