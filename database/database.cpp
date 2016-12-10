@@ -126,16 +126,18 @@ int DataBase::parseCSV(QString path)
         QStringList csv(line.split('\t'));
 
         QSqlQuery query;
-        query.prepare("INSERT INTO Points (track_id, lat, lon, alt, url, type) VALUES (:id, :lat, :lon, :alt, :url, :type)");
-        query.bindValue(":id", "1");
+        query.prepare("INSERT INTO Points (track_id, lat, lon, alt, azimuth, url, type) VALUES (:id, :lat, :lon, :alt, :azimuth, :url, :type);");
+        query.bindValue(":id", "3");
         query.bindValue(":lat", csv[LAT]);
         query.bindValue(":lon", csv[LON]);
         query.bindValue(":alt", csv[ALT]);
+        query.bindValue(":azimuth", csv[ANGLE]);
         query.bindValue(":url", csv[IMG_PATH]);
         query.bindValue(":type", "test");
 
         if (!query.exec()){
             qDebug() << "Error SQLite:" << query.lastError().text();
+            qDebug() << query.lastQuery();
         }
     }
     qDebug() << "Hello";

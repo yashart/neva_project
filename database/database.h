@@ -14,6 +14,7 @@
 #define LON 1
 #define ALT 3
 #define IMG_PATH 0
+#define ANGLE 6
 
 class DataBase : public QObject
 {

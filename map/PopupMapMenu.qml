@@ -10,70 +10,74 @@ Window
     height: 150
     GridLayout {
         columns: 3
-        ExclusiveGroup {id: popupMapToolsGroup}
+        ExclusiveGroup {
+            id: popupMapToolsGroup
+            property var lon: 0
+            property var lat: 0
+        }
         ToolButton {
             iconSource: "/img/bullbasaur.png"
             iconName: "bullbasaur"
             checkable: true
             checked: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/charmander.png"
             iconName: "charmander"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/eevee.png"
             iconName: "eevee"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/jigglypuff.png"
             iconName: "jigglypuff"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/pikachu.png"
             iconName: "pikachu"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/pokeball.png"
             iconName: "pokeball"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/psyduck.png"
             iconName: "psyduck"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/snorlax.png"
             iconName: "snorlax"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
         ToolButton {
             iconSource: "/img/squirtle.png"
             iconName: "squirtle"
             checkable: true
             exclusiveGroup: popupMapToolsGroup
-            onClicked: {pageMap.addPopupPoint()}
+            onClicked: {pageMap.addPopupPoint(popupMapToolsGroup.lon, popupMapToolsGroup.lat)}
         }
     }
     function getActiveTool()
@@ -83,5 +87,11 @@ Window
     function getActiveToolIcon()
     {
         return popupMapToolsGroup.current.iconSource;
+    }
+    function setCoordinates(coordinate)
+    {
+        popupMapToolsGroup.lon = coordinate.longitude;
+        popupMapToolsGroup.lat = coordinate.latitude;
+        console.log(coordinate.longitude + " !@31142 ");
     }
 }

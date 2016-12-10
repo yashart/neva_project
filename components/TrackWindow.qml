@@ -62,14 +62,20 @@ Window {
                 CheckBox{
                 property int trackId: id
                 text: qsTr(name)
-                onCheckedStateChanged:{
+                checked: (is_check === "true") ? true : false
+                onClicked:{
                     if (checked == true){
                         pointsModel.addId(id);
+                        tracksModel.setChecked(id);
+                        linesModel.addId(id);
                     }
                     if (checked == false){
                         pointsModel.delId(id);
+                        tracksModel.setUnchecked(id);
+                        linesModel.delId(id);
                     }
-                    pointsModel.updateModel()
+                    pointsModel.updateModel();
+                    tracksModel.updateModel();
                 }
                 MouseArea {
                     anchors.fill: parent

@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import Qt.labs.folderlistmodel 2.1
+import "../pages"
 
 
 ScrollView {
@@ -22,8 +23,10 @@ ScrollView {
                         smooth: false
                     }
                     onClicked: {
+                        pageMap.changeMapCenter(lat, lon);
+                        pageMap.changeViewPortCenter(lat, lon);
                         console.log("file:///" + dir + url);
-                        pictureWindow.changeImageSource("file:///" + dir + url, url);
+                        pictureWindow.changeImageSource("file:///" + dir + url, url, 0, lat, lon);
                     }
                 }
             }

@@ -1,4 +1,4 @@
-QT += qml quick widgets sql
+QT += qml quick widgets sql positioning
 
 CONFIG += c++11
 
@@ -9,7 +9,9 @@ SOURCES += main.cpp \
     database/pointsmodel.cpp \
     database/tracksmodel.cpp \
     database/imagesmodel.cpp \
-    database/locationsmodel.cpp
+    database/locationsmodel.cpp \
+    database/linesModel.cpp \
+    database/pointsphotomodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,7 +30,9 @@ HEADERS += \
     database/pointsmodel.h \
     database/tracksmodel.h \
     database/imagesmodel.h \
-    database/locationsmodel.h
+    database/locationsmodel.h \
+    database/linesModel.h \
+    database/pointsphotomodel.h
 
 DISTFILES += \
     database/DataBase.db

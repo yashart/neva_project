@@ -1,10 +1,11 @@
-#ifndef LOCATIONSMODEL_H
-#define LOCATIONSMODEL_H
+#ifndef POINTSPHOTOMODEL_H
+#define POINTSPHOTOMODEL_H
 
 #include <QObject>
 #include <QSqlQueryModel>
+#include <QGeoCoordinate>
 
-class LocationsModel : public QSqlQueryModel
+class PointsPhotoModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
@@ -18,16 +19,18 @@ public:
         IdRole = Qt::UserRole + 1,      // id
         LatRole,
         LonRole,
-        TypeRole
+        TypeRole,
+        DistRole
     };
 
     // объявляем конструктор класса
-    explicit LocationsModel(QObject *parent = 0);
+    explicit PointsPhotoModel(QObject *parent = 0);
 
     // Переопределяем метод, который будет возвращать данные
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 protected:
+    QGeoCoordinate center;
     /* хешированная таблица ролей для колонок.
      * Метод используется в дебрях базового класса QAbstractItemModel,
      * от которого наследован класс QSqlQueryModel
@@ -35,10 +38,12 @@ protected:
     QHash<int, QByteArray> roleNames() const;
 
 signals:
+    void centerChanged();
 
 public slots:
     void updateModel();
+    void setCenter(double lat, double lon);
     int getId(int row);
 };
 
-#endif // LOCATIONSMODEL_H
+#endif // POINTSPHOTOMODEL_H

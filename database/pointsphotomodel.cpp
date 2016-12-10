@@ -1,9 +1,15 @@
 #include "database.h"
-#include "pointsmodel.h"
+#include "pointsphotomodel.h"
 
-PointsModel::PointsModel(QObject *parent) :
+PointsPhotoModel::PointsPhotoModel(QObject *parent) :
     QSqlQueryModel(parent)
 {
+    QObject::connect(this, &PointsPhotoModel::centerChanged,
+            this, &PointsPhotoModel::updateModel);
+
+    this->center.setLatitude(45.889533);
+    this->center.setLongitude(40.126534);
+
     this->updateModel();
 }
 
@@ -11,7 +17,7 @@ PointsModel::PointsModel(QObject *parent) :
  * Вообще этот метод создан для QML. Именно он его скрытно
  * использует
 */
-QVariant PointsModel::data(const QModelIndex & index, int role) const
+QVariant PointsPhotoModel::data(const QModelIndex & index, int role) const
 {
     // Определяем номер колонки, адрес так сказать, по номеру роли
     int columnId = role - Qt::UserRole - 1;
@@ -24,71 +30,34 @@ QVariant PointsModel::data(const QModelIndex & index, int role) const
     return QSqlQueryModel::data(modelIndex, Qt::DisplayRole);
 }
 
-void PointsModel::addId(QString new_id)
-{
-    list_id.append(new_id);
-    emit setTracksId(list_id);
-
-}
-
-void PointsModel::delId(QString del_id)
-{
-    for (int i = 0; i < list_id.size(); i++)
-        if (list_id.at(i) == del_id)
-        {
-            list_id.removeAt(i);
-        }
-    emit setTracksId(list_id);
-}
-
 //Метод для получения имен ролей через хешированную таблицу.
-QHash<int, QByteArray> PointsModel::roleNames() const {
+QHash<int, QByteArray> PointsPhotoModel::roleNames() const {
     /* То есть сохраняем в хеш-таблицу названия ролей
      * по их номеру
      * */
     QHash<int, QByteArray> roles;
-    roles[IdRole] = "track_id";
+    roles[IdRole] = "id";
     roles[LatRole] = "lat";
     roles[LonRole] = "lon";
-    roles[AltRole] = "alt";
-    roles[AngleRole] = "azimuth";
-    roles[DirRole] = "dir";
-    roles[URLRole] = "url";
-    roles[CommentRole] = "comment";
     roles[TypeRole] = "type";
+    roles[DistRole] = "dist";
     return roles;
 }
 
 // Метод обновления таблицы в модели представления данных
-void PointsModel::updateModel()
+void PointsPhotoModel::updateModel()
 {
     // Обновление производится SQL-запросом к базе данных
     QString str_query("SELECT ");
-    str_query.append("Points.track_id, ");
-    str_query.append("Points.lat, ");
-    str_query.append("Points.lon, ");
-    str_query.append("Points.alt, ");
-    str_query.append("Points.azimuth, ");
-    str_query.append("Tracks.dir, ");
-    str_query.append("Points.url, ");
-    str_query.append("Points.comment, ");
-    str_query.append("Points.type ");
-    str_query.append("FROM Points ");
-    str_query.append("LEFT OUTER JOIN Tracks ON Tracks.id = Points.track_id ");
-    str_query.append("WHERE Points.track_id IN (");
+    str_query.append("id, ");
+    str_query.append("lat, ");
+    str_query.append("lon, ");
+    str_query.append("type, ");
+    str_query.append(QString("(((lat - (%1)) * (lat - (%1))) + ").arg(this->center.latitude()));
+    str_query.append(QString("(lon - (%1)) * (lon - (%1))) * (110 * 110) AS dist ").arg(this->center.longitude()));
+    str_query.append("FROM LocationsPoints ");
+    str_query.append("WHERE dist <= (0.15 * 0.15); ");
 
-    for (int i = 0; i < list_id.size(); i++){
-        if (i == list_id.size() - 1) // обработка последнего элемента списка
-        {
-            str_query.append(QString("%1").arg(list_id.at(i)));
-        }
-        else
-        {
-            str_query.append(QString("%1, ").arg(list_id.at(i)));
-        }
-    }
-
-    str_query.append(") ORDER BY Points.track_id; ");
     this->setQuery(str_query);
 
     while(this->canFetchMore()){ // загрузка всех данных в кэш
@@ -97,7 +66,14 @@ void PointsModel::updateModel()
 }
 
 //Получение id из строки в модели представления данных
-int PointsModel::getId(int row)
+int PointsPhotoModel::getId(int row)
 {
     return this->data(this->index(row, 0), IdRole).toInt();
+}
+
+void PointsPhotoModel::setCenter(double lat, double lon)
+{
+    this->center.setLatitude(lat);
+    this->center.setLongitude(lon);
+    emit centerChanged();
 }

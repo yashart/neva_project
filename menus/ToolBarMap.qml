@@ -41,11 +41,25 @@ ToolBar {
                     exclusiveGroup: mapToolsGroup
                 }
                 ToolButton {
-                    iconSource: "/img/remove_location_icon.png"
-                    iconName: "remove_location"
+                    iconSource: "qrc:/img/scan.png"
+                    iconName: "near_photo"
                     checkable: true
                     exclusiveGroup: mapToolsGroup
                 }
+                ToolButton {
+                    iconSource: "qrc:/img/ruler.png"
+                    iconName: "ruler"
+                    checkable: true
+                    exclusiveGroup: mapToolsGroup
+                }
+                ToolButton {
+                    iconSource: "qrc:/img/protractor.png"
+                    iconName: "protractor"
+                    checkable: true
+                    exclusiveGroup: mapToolsGroup
+                }
+
+
             }
         }
         Slider {

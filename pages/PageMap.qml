@@ -3,7 +3,8 @@ import "../map"
 import "../menus"
 
 
-Item {
+Item
+{
     MapPlugin {
         id: mapPlugin
     }
@@ -24,15 +25,20 @@ Item {
     {
         mapComponent.changeMapCenter(lat, lon);
     }
+    function changeViewPortCenter(lat, lon, azimuth)
+    {
+        mapComponent.changeViewPortCenter(lat, lon, azimuth);
+    }
+
     function addUserPoint(pointData){
         mapComponent.addUserPoint(pointData);
     }
     function toCoordinates(point){
         return mapComponent.toCoordinates(point);
     }
-    function addPopupPoint()
+    function addPopupPoint(lon, lat)
     {
-        mapComponent.addPopupPoint();
+        mapComponent.addPopupPoint(lon, lat);
     }
 
 }

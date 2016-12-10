@@ -1,7 +1,7 @@
 #include "database.h"
-#include "tracksmodel.h"
+#include "linesModel.h"
 
-TracksModel::TracksModel(QObject *parent) :
+LinesModel::LinesModel(QObject *parent) :
     QSqlQueryModel(parent)
 {
     this->updateModel();
@@ -11,13 +11,12 @@ TracksModel::TracksModel(QObject *parent) :
  * Вообще этот метод создан для QML. Именно он его скрытно
  * использует
 */
-QVariant TracksModel::data(const QModelIndex & index, int role) const {
+QVariant LinesModel::data(const QModelIndex & index, int role) const {
 
     //Если пришел запрос на массив, то досрочно его отдаем
     if (role == PointsRole)
     {
-        qDebug() << "Пытаются докапаться до " << index.row();
-        return this->tracks[0];
+        return this->tracks[index.row()];
     }
 
     // Определяем номер колонки, адрес так сказать, по номеру роли
@@ -31,65 +30,68 @@ QVariant TracksModel::data(const QModelIndex & index, int role) const {
     return QSqlQueryModel::data(modelIndex, Qt::DisplayRole);
 }
 
+void LinesModel::addId(QString new_id)
+{
+    list_id.append(new_id);
+    this->updateModel();
+}
+
+void LinesModel::delId(QString del_id)
+{
+    for (int i = 0; i < list_id.size(); i++)
+        if (list_id.at(i) == del_id)
+        {
+            list_id.removeAt(i);
+        }
+    this->updateModel();
+}
+
 // Метод для получения имен ролей через хешированную таблицу.
-QHash<int, QByteArray> TracksModel::roleNames() const {
+QHash<int, QByteArray> LinesModel::roleNames() const {
     /* То есть сохраняем в хеш-таблицу названия ролей
      * по их номеру
      * */
     QHash<int, QByteArray> roles;
     roles[IdRole] = "id";
     roles[NameRole] = "name";
-    roles[CheckRole] = "is_check";
     roles[PointsRole] = "points";
     return roles;
 }
 
 // Метод обновления таблицы в модели представления данных
-void TracksModel::updateModel()
+void LinesModel::updateModel()
 {
     this->tracks = this->getPointsOfTracks();
     // Обновление производится SQL-запросом к базе данных
-    QString str_query("SELECT id, name, is_check FROM Tracks;");
+    QString str_query("SELECT id, name FROM Tracks ");
+    str_query.append("WHERE Tracks.id IN (");
+
+    for (int i = 0; i < list_id.size(); i++){
+        if (i == list_id.size() - 1) // обработка последнего элемента списка
+        {
+            str_query.append(QString("%1").arg(list_id.at(i)));
+        }
+        else
+        {
+            str_query.append(QString("%1, ").arg(list_id.at(i)));
+        }
+    }
+    str_query.append("); ");
+
     this->setQuery(str_query);
 }
 
-void TracksModel::setChecked(int id)
-{
-    QSqlQuery query;
-    query.prepare("UPDATE Tracks SET is_check = 'true' WHERE id = :id ");
-    query.bindValue(":id", id);
-
-    if (!query.exec()){
-        qDebug() << "Error SQLite:" << query.lastError().text();
-    }
-}
-
-void TracksModel::setUnchecked(int id)
-{
-    QSqlQuery query;
-    query.prepare("UPDATE Tracks SET is_check = 'false' WHERE id = :id ");
-    query.bindValue(":id", id);
-
-    if (!query.exec()){
-        qDebug() << "Error SQLite:" << query.lastError().text();
-    }
-}
-
-void TracksModel::recvTracksId(QStringList ids)
-{
-    this->tracksIdList = ids;
-}
-
-QVector<QVariantList> TracksModel::getPointsOfTracks()
+QVector<QVariantList> LinesModel::getPointsOfTracks()
 {
     QVector<QVariantList> list;
 
-    //for (int i = 0; i < this->tracksIdList.size(); i++)
-    //{
+    for (int i = 0; i < this->list_id.size(); i++)
+    {
         QSqlQuery query;
 
         query.prepare("SELECT lat, lon FROM Points WHERE Points.track_id = :track_id");
-        query.bindValue(":track_id", 1/*tracksIdList.at(1)*/);
+        query.bindValue(":track_id", list_id.at(i));
+        qDebug() << "Работает" <<  list_id.at(i);
         if (!query.exec()){
             qDebug() << "Error:" << query.lastError().text();
         }
@@ -105,45 +107,14 @@ QVector<QVariantList> TracksModel::getPointsOfTracks()
         }
         list.push_back(path);
 
-    //}
-
-    return list;
-
-    /*QVariantList path;
-    QGeoCoordinate coordinate(55.924449, 37.510043);
-    path.append(QVariant::fromValue(coordinate));
-    coordinate = QGeoCoordinate(55.948002, 37.558683);
-    path.append(QVariant::fromValue(coordinate));
-    */
-}
-
-/*QVector<QVariantList> TracksModel::getPointsOfTracks()
-{
-    QVector<QVariantList> temp_tracks;
-    for (int i = 0; i <= 3; i++) // обрабатываем каждый трек
-    {
-       QVariantList path;
-//       for(int j = 0; j <= 10; j++) // ззаполняем массив с точками одного трека
-//       {
-           QVariantMap point;
-           point["latitude"] = QVariant(55.928848 + (0.000680 * i));
-           point["longtitude"] = QVariant(37.519537 + (0.002200 * i));
-           path.append(point);
-
-           QVariantMap point2;
-           point2["latitude"] = QVariant(55.928169 + (0.000680 * i));
-           point2["longtitude"] = QVariant(37.521683 + (0.002200 * i));
-           path.append(point2);
-       //}push_back(path);
-       temp_tracks.
-       // Сохраняем трек в список
     }
 
-    return temp_tracks;
-}*/
+    return list;
+}
+
 
 // Получение id из строки в модели представления данных
-int TracksModel::getId(int row)
+int LinesModel::getId(int row)
 {
     return this->data(this->index(row, 0), IdRole).toInt();
 }

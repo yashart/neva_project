@@ -9,7 +9,7 @@ import "pages"
 
 
 ApplicationWindow {
-    title: qsTr("Drone Neva Project v0.0.2")
+    title: qsTr("Полигон - Ф")
 
     menuBar: mainMenu
     toolBar: toolBarMap
@@ -31,9 +31,6 @@ ApplicationWindow {
             id: mainMenu
         }
 
-        OpenGPX {
-            id: openGPX
-        }
 
         MakeGPX {
             id: makeGPX
@@ -50,14 +47,12 @@ ApplicationWindow {
             anchors.fill: parent
             visible: true
         }
-
-        PopupMapMenu {
-            id: popupMapMenu
-            visible: false
-        }
-
         PictureWindow {
             id: pictureWindow
+            visible: false
+        }
+        PopupMapMenu {
+            id: popupMapMenu
             visible: false
         }
         XmlModel {
