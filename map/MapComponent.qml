@@ -179,7 +179,6 @@ Map {
                     parent.opacity = 0;
                 }
                 onClicked: {
-                    pointsPhotoModel.setCenter(lat, lon);
                     map.changeViewPortCenter(lat, lon, azimuth);
                     imagesModel.updateModel();
                     pictureWindow.data;
@@ -188,6 +187,9 @@ Map {
                     pictureWindow.changeImageSource("file:///" + dir + url, url, azimuth, lat, lon);
                     console.log("file:///" + dir + url);
                     console.log(azimuth);
+                    pointsPhotoModel.setCenter(lat, lon);
+                    pointsPhotoModel.updateModel();
+
                 }
             }
         }

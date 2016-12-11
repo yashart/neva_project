@@ -74,6 +74,7 @@ Window {
                         }
                     }
                     onClicked: {
+                        pointsPhotoModel.updateModel();
                         popupMapMenu.visible = false;
                         popupMapMenu.x = dragArea.mouseX + pichWidow.x;
                         popupMapMenu.y = dragArea.mouseY + pichWidow.y + 70;
