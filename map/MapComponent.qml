@@ -180,16 +180,12 @@ Map {
                 }
                 onClicked: {
                     map.changeViewPortCenter(lat, lon, azimuth);
-                    imagesModel.updateModel();
-                    pictureWindow.data;
                     pictureWindow.visible = true;
                     image_src = url;
                     pictureWindow.changeImageSource("file:///" + dir + url, url, azimuth, lat, lon);
                     console.log("file:///" + dir + url);
                     console.log(azimuth);
                     pointsPhotoModel.setCenter(lat, lon);
-                    pointsPhotoModel.updateModel();
-
                 }
             }
         }

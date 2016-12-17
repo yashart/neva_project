@@ -28,13 +28,15 @@ Window {
 
             Image {
                 id: image
+                asynchronous: true
                 width: pictureWindow.width
                 height: pictureWindow.height - imageSlideView.height - 50
                 source: "../img/photo_example.jpg"
-                autoTransform: true
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
                 z: 1
+                cache: false
+
 
                 property var lat: 0
                 property var lon: 0
@@ -49,8 +51,15 @@ Window {
                            (image.lat-lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedWidth
                         y: (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)+
                            (lon-image.lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
-                        z: 0
+                        z: 3
                         source: "qrc:///img/" + type + ".png"
+                        onStatusChanged: if (pointsOnPicture.status == Image.Ready) console.log('Loaded point')
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.log(lat + "   " + lon);
+                            }
+                        }
                     }
                 }
                 MouseArea {
@@ -74,7 +83,7 @@ Window {
                         }
                     }
                     onClicked: {
-                        pointsPhotoModel.updateModel();
+                        console.log('Click Image  ' + image.paintedHeight + ' ' + image.paintedWidth);
                         popupMapMenu.visible = false;
                         popupMapMenu.x = dragArea.mouseX + pichWidow.x;
                         popupMapMenu.y = dragArea.mouseY + pichWidow.y + 70;
