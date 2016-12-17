@@ -25,6 +25,7 @@ ApplicationWindow {
             console.log("Delete");
             dataBase.deleteLocalPoint();
             event.accepted = true;
+            pictureWindow.refreshImage();
         }
 
         MainMenu {

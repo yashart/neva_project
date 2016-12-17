@@ -53,7 +53,6 @@ Window {
                            (lon-image.lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
                         z: 3
                         source: "qrc:///img/" + type + ".png"
-                        onStatusChanged: if (pointsOnPicture.status == Image.Ready) console.log('Loaded point')
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -142,5 +141,11 @@ Window {
     function getXmlModel()
     {
         return xmlModel;
+    }
+    function refreshImage()
+    {
+        var imgSrc = image.source;
+        image.source = "";
+        image.source = imgSrc;
     }
 }
