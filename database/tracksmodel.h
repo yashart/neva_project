@@ -20,6 +20,8 @@ public:
     };
 
     explicit TracksModel(QObject *parent = 0);
+    ~TracksModel();
+
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 protected:

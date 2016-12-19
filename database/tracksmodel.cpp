@@ -74,6 +74,20 @@ void TracksModel::setUnchecked(int id)
         qDebug() << "Error SQLite:" << query.lastError().text();
     }
 }
+TracksModel::~TracksModel()
+{
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("DataBase.db");
+    db.open();
+
+    QSqlQuery query;
+    query.prepare("UPDATE Tracks SET is_check = 'false' ");
+
+    if (!query.exec()){
+        qDebug() << "Error SQLite:" << query.lastError().text();
+    }
+}
 
 void TracksModel::recvTracksId(QStringList ids)
 {

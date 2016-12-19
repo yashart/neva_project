@@ -22,7 +22,7 @@ Window {
         Rectangle {
             id: photoFrame
             width: pictureWindow.width
-            height: pictureWindow.height - imageSlideView.height
+            height: pictureWindow.height
             Layout.preferredWidth: pictureWindow.width
             Layout.preferredHeight: pictureWindow.height - 50
 
@@ -30,7 +30,7 @@ Window {
                 id: image
                 asynchronous: true
                 width: pictureWindow.width
-                height: pictureWindow.height - imageSlideView.height - 50
+                height: pictureWindow.height - 50
                 source: "../img/photo_example.jpg"
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
@@ -49,7 +49,7 @@ Window {
                     delegate: Image {
                         x: (((lon-image.lon)/dragArea.offsetLon*Math.cos(image.azimuth*3.1415/180)-
                            (image.lat-lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedWidth
-                        y: (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)+
+                        y: image.height / 4 + (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)+
                            (lon-image.lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
                         z: 3
                         source: "qrc:///img/" + type + ".png"
@@ -66,8 +66,8 @@ Window {
                     hoverEnabled: true
                     anchors.fill: parent
                     drag.target: image
-                    property var offsetLon: 0.00034 // эксперементальным путем
-                    property var offsetLat: 0.0011 // эксперементальным путем
+                    property var offsetLon: 0.00150 // эксперементальным путем
+                    property var offsetLat: 0.0016 // эксперементальным путем
                     onWheel: {
                         if (wheel.modifiers & Qt.ControlModifier) {
                             image.rotation += wheel.angleDelta.y / 120 * 5;
@@ -113,11 +113,11 @@ Window {
             }
         }
 
-        ImageSlideView {
+        /*ImageSlideView {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             id: imageSlideView
-        }
+        }*/
     }
     function createTrackPath(source)
     {
@@ -126,10 +126,10 @@ Window {
     function changeImageSource(source, imageName, azimuth, lat, lon)
     {
         image.source = source;
-        image.azimuth = azimuth;
+        image.azimuth = 180 + azimuth;
         image.lat = lat;
         image.lon = lon;
-        image.rotation = 180 + azimuth;
+        image.rotation = azimuth;
         image.x = photoFrame.x;
         image.y = photoFrame.y;
         image.scale = 1;
