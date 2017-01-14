@@ -29,7 +29,7 @@ Window {
             Image {
                 id: image
                 asynchronous: true
-                width: pictureWindow.width
+                //width: pictureWindow.width
                 height: pictureWindow.height - 50
                 source: "../img/photo_example.jpg"
                 fillMode: Image.PreserveAspectFit
@@ -37,26 +37,31 @@ Window {
                 z: 1
                 cache: false
 
-
                 property var lat: 0
                 property var lon: 0
                 property var azimuth: 0
                 ListView {
-                    anchors.fill: image
+                    anchors.fill: parent
                     id: pointsOnPicture
 
                     model: pointsPhotoModel
                     delegate: Image {
                         x: (((lon-image.lon)/dragArea.offsetLon*Math.cos(image.azimuth*3.1415/180)-
                            (image.lat-lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedWidth
-                        y: image.height / 4 + (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)+
-                           (lon-image.lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
-                        z: 3
+                        y: (((lat-image.lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180)+
+                           (image.lon-lon)/dragArea.offsetLon*Math.cos(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight +
+                           300
+                        z: 5
                         source: "qrc:///img/" + type + ".png"
+                        cache: false
+                        asynchronous: true
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
+                                console.log("11231!!!");
                                 console.log(lat + "   " + lon);
+                                console.log(image.lat + "  " + image.lon);
+                                console.log(parent.x, parent.y);
                             }
                         }
                     }
@@ -65,6 +70,7 @@ Window {
                     id: dragArea
                     hoverEnabled: true
                     anchors.fill: parent
+                    anchors.margins: 0
                     drag.target: image
                     property var offsetLon: 0.00150 // эксперементальным путем
                     property var offsetLat: 0.0016 // эксперементальным путем
@@ -80,6 +86,9 @@ Window {
                             var scaleBefore = image.scale;
                             image.scale += image.scale * wheel.angleDelta.y / 120 / 10;
                         }
+                    }
+                    onPositionChanged: {
+                        console.log(dragArea.mouseX, dragArea.mouseY);
                     }
                     onClicked: {
                         console.log('Click Image  ' + image.paintedHeight + ' ' + image.paintedWidth);
