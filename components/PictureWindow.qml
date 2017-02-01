@@ -28,33 +28,41 @@ Window {
 
             Image {
                 id: image
-                asynchronous: true
+                asynchronous: false
                 //width: pictureWindow.width
                 height: pictureWindow.height - 50
-                source: "../img/photo_example.jpg"
+                source: "file:///home/yashart/Downloads/Furmanovka/DSC01751.JPG"
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
                 z: 1
                 cache: false
+                Component.onCompleted: {
+                    console.log("Completed!");
+                }
 
                 property var lat: 0
                 property var lon: 0
                 property var azimuth: 0
                 ListView {
-                    anchors.fill: parent
+                    anchors.fill: image
                     id: pointsOnPicture
 
                     model: pointsPhotoModel
                     delegate: Image {
                         x: (((lon-image.lon)/dragArea.offsetLon*Math.cos(image.azimuth*3.1415/180)-
                            (image.lat-lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedWidth
-                        y: (((lat-image.lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180)+
-                           (image.lon-lon)/dragArea.offsetLon*Math.cos(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight +
-                           300
+                        y: (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)-
+                           (image.lon-lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
                         z: 5
                         source: "qrc:///img/" + type + ".png"
                         cache: false
                         asynchronous: true
+                        Component.onCompleted: {
+                            console.log("point completed");
+                            console.log(image.status);
+                            var src = image.source;
+                        }
+
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -62,6 +70,17 @@ Window {
                                 console.log(lat + "   " + lon);
                                 console.log(image.lat + "  " + image.lon);
                                 console.log(parent.x, parent.y);
+                            }
+                        }
+                        Timer {
+                        interval: 500; running: true; repeat: false
+                            onTriggered: {
+                                parent.x = -1;
+                                parent.y = -1;
+                                parent.x = (((lon-image.lon)/dragArea.offsetLon*Math.cos(image.azimuth*3.1415/180)-
+                                             (image.lat-lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedWidth;
+                                parent.y = (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)-
+                                             (image.lon-lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight;
                             }
                         }
                     }
