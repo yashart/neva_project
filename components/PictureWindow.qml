@@ -56,7 +56,7 @@ Window {
                         z: 5
                         source: "qrc:///img/" + type + ".png"
                         cache: false
-                        asynchronous: true
+                        asynchronous: false
                         Component.onCompleted: {
                             console.log("point completed");
                             console.log(image.status);
@@ -73,7 +73,7 @@ Window {
                             }
                         }
                         Timer {
-                        interval: 500; running: true; repeat: false
+                        interval: 500; running: true; repeat: true
                             onTriggered: {
                                 parent.x = -1;
                                 parent.y = -1;
@@ -153,6 +153,7 @@ Window {
     }
     function changeImageSource(source, imageName, azimuth, lat, lon)
     {
+        image.source = "";
         image.source = source;
         image.azimuth = 180 + azimuth;
         image.lat = lat;
@@ -173,7 +174,7 @@ Window {
     function refreshImage()
     {
         var imgSrc = image.source;
-        image.source = "";
-        image.source = imgSrc;
+        //image.source = "";
+        //image.source = imgSrc;
     }
 }
