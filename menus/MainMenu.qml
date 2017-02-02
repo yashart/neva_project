@@ -20,6 +20,19 @@ MenuBar {
     }
 
     Menu {
+        id: mapMenu
+        title: qsTr("Карта")
+        visible: false
+        MenuItem {
+                text: "Очистить кэш"
+                shortcut: "Ctrl+С"
+                onTriggered: {
+                    pageMap.clearMap();
+                }
+            }
+    }
+
+    Menu {
         id: trackMenu
         title: qsTr("Треки")
         visible: false
@@ -49,5 +62,6 @@ MenuBar {
     {
         fileMenu.visible = true;
         trackMenu.visible = true;
+        mapMenu.visible = true;
     }
 }

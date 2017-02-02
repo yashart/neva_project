@@ -17,6 +17,11 @@ Item
         id: toolBarMap
     }
 
+    function clearMap()
+    {
+        mapComponent.clearData();
+    }
+
     function addTrack(path)
     {
         mapComponent.addTrack(path);

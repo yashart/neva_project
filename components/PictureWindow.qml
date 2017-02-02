@@ -155,7 +155,7 @@ Window {
     {
         image.source = "";
         image.source = source;
-        image.azimuth = 180 + azimuth;
+        image.azimuth = 90 + azimuth;
         image.lat = lat;
         image.lon = lon;
         image.rotation = azimuth;

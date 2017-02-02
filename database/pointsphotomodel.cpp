@@ -56,7 +56,7 @@ void PointsPhotoModel::updateModel()
     str_query.append(QString("(((lat - (%1)) * (lat - (%1))) + ").arg(this->center.latitude()));
     str_query.append(QString("(lon - (%1)) * (lon - (%1))) * (110 * 110) AS dist ").arg(this->center.longitude()));
     str_query.append("FROM LocationsPoints ");
-    str_query.append("WHERE dist <= (0.15 * 0.15); ");
+    str_query.append("WHERE dist <= (0.25 * 0.25); ");
 
     this->setQuery(str_query);
 
