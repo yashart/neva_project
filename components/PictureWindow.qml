@@ -54,7 +54,7 @@ Window {
                         y: (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)-
                            (image.lon-lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
                         z: 2
-                        source: "qrc:///img/popupIconsSet" + type + ".png"
+                        source: "qrc:///img/popupIconsSet/" + type + ".png"
                         cache: false
                         asynchronous: false
                         Component.onCompleted: {
