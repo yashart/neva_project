@@ -24,12 +24,12 @@ MenuBar {
         title: qsTr("Карта")
         visible: false
         MenuItem {
-                text: "Очистить кэш"
-                shortcut: "Ctrl+С"
-                onTriggered: {
-                    pageMap.clearMap();
-                }
+            text: "Очистить кэш"
+            shortcut: "Ctrl+С"
+            onTriggered: {
+                pageMap.clearMap();
             }
+        }
     }
 
     Menu {

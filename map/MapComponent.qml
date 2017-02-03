@@ -71,7 +71,7 @@ Map {
             anchorPoint.y: markerCustomPoint.height / 2;
             sourceItem: Image {
                 id: markerCustomPoint
-                source: "qrc:///img/" + type + ".png"
+                source: "qrc:///img/popupIconsSet/" + type + ".png"
             }
             MouseArea{
                 anchors.fill: parent;
@@ -97,7 +97,7 @@ Map {
             anchorPoint.y: markerLkPoint.height / 2;
             sourceItem: Image {
                 id: markerLkPoint
-                source: "qrc:///img/" + type + ".png"
+                source: "qrc:///img/popupIconsSet/" + type + ".png"
             }
         }
     }
@@ -161,6 +161,7 @@ Map {
             opacity:0
             sourceItem: Image {
                 id: markerTrackPoint
+                z: 8
                 source: "/img/photo.png"
             }
 
