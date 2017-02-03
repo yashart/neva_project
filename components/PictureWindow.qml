@@ -37,7 +37,7 @@ Window {
                 z: 1
                 cache: false
                 Component.onCompleted: {
-                    console.log("Completed!");
+                    //console.log("Completed!");
                 }
 
                 property var lat: 0
@@ -58,18 +58,18 @@ Window {
                         cache: false
                         asynchronous: false
                         Component.onCompleted: {
-                            console.log("point completed");
-                            console.log(image.status);
+                            /*console.log("point completed");
+                            console.log(image.status);*/
                             var src = image.source;
                         }
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                console.log("11231!!!");
+                                /*console.log("11231!!!");
                                 console.log(lat + "   " + lon);
                                 console.log(image.lat + "  " + image.lon);
-                                console.log(parent.x, parent.y);
+                                console.log(parent.x, parent.y);*/
                             }
                         }
                         Timer {
@@ -107,16 +107,16 @@ Window {
                         }
                     }
                     onPositionChanged: {
-                        console.log(dragArea.mouseX, dragArea.mouseY);
+                        //console.log(dragArea.mouseX, dragArea.mouseY);
                     }
                     onClicked: {
-                        console.log('Click Image  ' + image.paintedHeight + ' ' + image.paintedWidth);
+                        //console.log('Click Image  ' + image.paintedHeight + ' ' + image.paintedWidth);
                         popupMapMenu.visible = false;
                         popupMapMenu.x = dragArea.mouseX + pichWidow.x;
                         popupMapMenu.y = dragArea.mouseY + pichWidow.y + 70;
-                        console.log(image.lon + ((2*dragArea.mouseX/image.paintedWidth-1)*Math.cos(image.azimuth*3.1415/180)+
+                        /*console.log(image.lon + ((2*dragArea.mouseX/image.paintedWidth-1)*Math.cos(image.azimuth*3.1415/180)+
                                      (2*dragArea.mouseY/image.paintedHeight-1)*Math.sin(image.azimuth*3.1415/180))*
-                        offsetLon);
+                        offsetLon);*/
 
                         popupMapMenu.setCoordinates(
                                     QtPositioning.coordinate(
@@ -162,6 +162,7 @@ Window {
         image.x = photoFrame.x;
         image.y = photoFrame.y;
         image.scale = 1;
+        pichWidow.title = source;
     }
     function getFolderSource()
     {

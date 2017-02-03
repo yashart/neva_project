@@ -13,7 +13,6 @@ Window
             RowLayout {
                 ToolButton {
                     iconSource: "/img/popupIconsSet/pikachu.png"
-                    exclusiveGroup: iconsSets
                     onClicked: {
                         popupSet1Icon1.visible = true;
                         popupSet1Icon2.visible = true;
@@ -38,7 +37,6 @@ Window
                 }
                 ToolButton {
                     iconSource: "/img/popupIconsSet/4.png"
-                    exclusiveGroup: iconsSets
                     onClicked: {
                         popupSet1Icon1.visible = false;
                         popupSet1Icon2.visible = false;
