@@ -20,6 +20,18 @@ MenuBar {
     }
 
     Menu {
+        id: mapMenu
+        title: qsTr("Карта")
+        visible: false
+        MenuItem {
+            text: "Очистить кэш"
+            onTriggered: {
+                pageMap.clearMap;
+            }
+        }
+    }
+
+    Menu {
         id: trackMenu
         title: qsTr("Треки")
         visible: false

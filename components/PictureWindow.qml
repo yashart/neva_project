@@ -53,7 +53,7 @@ Window {
                            (image.lat-lat)/dragArea.offsetLat*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedWidth
                         y: (((image.lat-lat)/dragArea.offsetLat*Math.cos(image.azimuth*3.1415/180)-
                            (image.lon-lon)/dragArea.offsetLon*Math.sin(image.azimuth*3.1415/180))/2 + 0.5)*image.paintedHeight
-                        z: 5
+                        z: 2
                         source: "qrc:///img/" + type + ".png"
                         cache: false
                         asynchronous: false
