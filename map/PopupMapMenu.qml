@@ -11,10 +11,6 @@ Window
     ColumnLayout {
         ToolBar {
             RowLayout {
-                Label {
-                    text: "Выбери свою армию!"
-                }
-
                 ToolButton {
                     iconSource: "/img/popupIconsSet/pikachu.png"
                     exclusiveGroup: iconsSets
