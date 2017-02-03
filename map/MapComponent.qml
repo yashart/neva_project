@@ -97,7 +97,7 @@ Map {
             anchorPoint.y: markerLkPoint.height / 2;
             sourceItem: Image {
                 id: markerLkPoint
-                source: "qrc:///img/" + type + ".png"
+                source: "qrc:///img/popupIconsSet/" + type + ".png"
             }
         }
     }
