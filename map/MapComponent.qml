@@ -35,16 +35,14 @@ Map {
             if (toolBarMap.getActiveTool() == "ruler"
                 && mouse.button == Qt.LeftButton){
                 rulerModel.addPoint(map.toCoordinate(Qt.point(mouseX, mouseY)));
-                summaryDistance.text = " 500 метров"
             }
 
             if (toolBarMap.getActiveTool() == "ruler"
                 && mouse.button == Qt.RightButton){
                 rulerModel.delPoint();
-                summaryDistance.text =  " 500 метров"
             }
 
-            if(mouse.button == Qt.RightButton)
+            if(mouse.button == Qt.RightButton && toolBarMap.getActiveTool() == "mouse")
             {
                 map.popupX = mouse.x;
                 map.popupY = mouse.y;
