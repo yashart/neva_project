@@ -35,11 +35,13 @@ Map {
             if (toolBarMap.getActiveTool() == "ruler"
                 && mouse.button == Qt.LeftButton){
                 rulerModel.addPoint(map.toCoordinate(Qt.point(mouseX, mouseY)));
+                summaryDistance.text = " 500 метров"
             }
 
             if (toolBarMap.getActiveTool() == "ruler"
                 && mouse.button == Qt.RightButton){
                 rulerModel.delPoint();
+                summaryDistance.text =  " 500 метров"
             }
 
             if(mouse.button == Qt.RightButton)
@@ -112,31 +114,36 @@ Map {
         }
     }
 
-   /*MapItemView {
-        id: tracksLine
+    MapQuickItem {
+        id: startRulerPoint
+        anchorPoint.x: startRulerIcon.width / 2;
+        anchorPoint.y: startRulerIcon.height / 2;
+        coordinate: rulerModel.startPoint
 
-        model: tracksModel
-        delegate: MapQuickItem {
-            coordinate {
-                latitude: 55.92862
-                longitude: 37.520932
-            }
-            sourceItem: Image {
-                source: "qrc:///img/pikachu.png"
-            }
-            MouseArea{
-                anchors.fill: parent;
-                onClicked: {
-                    console.log(points);
-                }
-            }
+        sourceItem: Image {
+            id: startRulerIcon
+            source: "qrc:/img/start.png"
         }
-    }*/
+    }
+
+    MapQuickItem {
+        id: finishRulerPoint
+        anchorPoint.x: finishRulerIcon.width / 2;
+        anchorPoint.y: finishRulerIcon.height / 2;
+        coordinate: rulerModel.finishPoint
+
+        sourceItem:
+            Column{
+                Image {id: finishRulerIcon; source: "qrc:/img/finish.png"}
+                Text {text: rulerModel.distance; font.bold: true; color: "#FFFFFF" }
+        }
+    }
 
     MapPolyline {
-    line.width: 2
-    line.color: 'red'
-    path: rulerModel.rulerList
+        line.width: 2
+        line.color: 'red'
+        path: rulerModel.rulerList
+        smooth: true
     }
 
     MapItemView{
@@ -160,22 +167,6 @@ Map {
 
     }
 
-    MapQuickItem {
-        coordinate {
-            latitude: rulerModel.startPoint.latitude
-            longitude: rulerModel.startPoint.longitude
-        }
-
-        sourceItem: Image {
-            source: "qrc:/img/ruler.png"
-        }
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                console.log(rulerModel.startPoint.latitude);
-            }
-        }
-    }
 
     function addTrack(path)
     {

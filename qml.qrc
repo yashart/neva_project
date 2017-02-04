@@ -47,5 +47,7 @@
         <file>img/popupIconsSet/3.png</file>
         <file>img/popupIconsSet/2.png</file>
         <file>img/popupIconsSet/1.png</file>
+        <file>img/finish.png</file>
+        <file>img/start.png</file>
     </qresource>
 </RCC>
