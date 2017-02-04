@@ -4,26 +4,36 @@
 #include <QAbstractListModel>
 #include <QList>
 #include <QGeoCoordinate>
+#include <QDebug>
 
-class RulerModel : public QAbstractListModel
+class RulerModel : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QVariantList rulerList READ rulerList NOTIFY rulerListChanged)
+    Q_PROPERTY(QVariant startPoint READ startPoint NOTIFY startPointChanged)
 
 public:
-    enum Roles {
-        ColorRole = Qt::UserRole + 1,
-        TextRole
-    };
-
     RulerModel(QObject *parent = 0);
+    QVariantList rulerList()
+    {
+        return this->m_rulerList;
+    }
+    QVariant startPoint()
+    {
+        if(!this->m_rulerList.empty())
+        {
+            qDebug() << "Hello";
+            return this->m_rulerList.at(0);
+        }
+        return QVariant();
+    }
 
-    virtual int rowCount(const QModelIndex &parent) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    virtual QHash<int, QByteArray> roleNames() const;
-
-    Q_INVOKABLE void add();
-
+    Q_INVOKABLE void addPoint(QGeoCoordinate point);
+    Q_INVOKABLE void delPoint();
+signals:
+    void rulerListChanged();
+    void startPointChanged();
 private:
-    QStringList m_data;
+    QVariantList m_rulerList;
 };
 #endif // RULER_H

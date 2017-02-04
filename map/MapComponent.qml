@@ -32,6 +32,16 @@ Map {
 
             }
 
+            if (toolBarMap.getActiveTool() == "ruler"
+                && mouse.button == Qt.LeftButton){
+                rulerModel.addPoint(map.toCoordinate(Qt.point(mouseX, mouseY)));
+            }
+
+            if (toolBarMap.getActiveTool() == "ruler"
+                && mouse.button == Qt.RightButton){
+                rulerModel.delPoint();
+            }
+
             if(mouse.button == Qt.RightButton)
             {
                 map.popupX = mouse.x;
@@ -123,32 +133,11 @@ Map {
         }
     }*/
 
-    MapQuickItem {
-                coordinate {
-                    latitude: 55.930900
-                    longitude: 37.521555
-                }
-                sourceItem: Image {
-                    source: "qrc:/img/ruler.png"
-                }
-                MouseArea{
-                    anchors.fill: parent;
-                    onClicked: {
-                        console.log(testline.path);
-                    }
-                }
-            }
-
-    /*MapItemView{
-         id: rulerLines
-         model: rulerModel
-         delegate:
-             MapPolyline {
-             line.width: 2
-             line.color: 'red'
-             path: path
-         }
-     }*/
+    MapPolyline {
+    line.width: 2
+    line.color: 'red'
+    path: rulerModel.rulerList
+    }
 
     MapItemView{
         id: tracksLines
@@ -171,7 +160,22 @@ Map {
 
     }
 
+    MapQuickItem {
+        coordinate {
+            latitude: rulerModel.startPoint.latitude
+            longitude: rulerModel.startPoint.longitude
+        }
 
+        sourceItem: Image {
+            source: "qrc:/img/ruler.png"
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                console.log(rulerModel.startPoint.latitude);
+            }
+        }
+    }
 
     function addTrack(path)
     {

@@ -10,14 +10,11 @@
 #include "database/linesModel.h"
 #include "database/pointsphotomodel.h"
 #include "models/rulerModel.h"
-#include <QStandardPaths>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-
-    //qDebug() << QStandardPaths::writableLocation (QStandardPaths::GenericCacheLocation);
 
     DataBase db;
     TracksModel tracksModel;

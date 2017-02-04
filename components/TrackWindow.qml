@@ -117,15 +117,6 @@ Window {
                         txt: "two"
                     }
                 }
-
-            ListView {
-                width: 180; height: 200
-
-                model: rulerModel
-                delegate: Text {
-                    text: txt + "Hello"
-                }
-            }
         }
     }
 
