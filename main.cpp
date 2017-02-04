@@ -9,11 +9,15 @@
 #include "database/locationsmodel.h"
 #include "database/linesModel.h"
 #include "database/pointsphotomodel.h"
+#include "models/rulerModel.h"
+#include <QStandardPaths>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+
+    //qDebug() << QStandardPaths::writableLocation (QStandardPaths::GenericCacheLocation);
 
     DataBase db;
     TracksModel tracksModel;
@@ -22,6 +26,7 @@ int main(int argc, char *argv[])
     LocationsModel locationsModel;
     LinesModel linesModel;
     PointsPhotoModel pointsPhotoModel;
+    RulerModel rulerModel;
 
 
     QObject::connect(&db, &DataBase::updateLocationsModel,
@@ -44,6 +49,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("locationsModel", &locationsModel);
     ctx->setContextProperty("linesModel", &linesModel);
     ctx->setContextProperty("pointsPhotoModel", &pointsPhotoModel);
+    ctx->setContextProperty("rulerModel", &rulerModel);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();

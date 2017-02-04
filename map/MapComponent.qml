@@ -4,7 +4,7 @@ import QtPositioning 5.2
 import QtQuick.Controls 1.4
 
 
-Map {
+Map { 
     plugin: mapPlugin
     id: map
 
@@ -122,7 +122,35 @@ Map {
             }
         }
     }*/
-   MapItemView{
+
+    MapQuickItem {
+                coordinate {
+                    latitude: 55.930900
+                    longitude: 37.521555
+                }
+                sourceItem: Image {
+                    source: "qrc:/img/ruler.png"
+                }
+                MouseArea{
+                    anchors.fill: parent;
+                    onClicked: {
+                        console.log(testline.path);
+                    }
+                }
+            }
+
+    /*MapItemView{
+         id: rulerLines
+         model: rulerModel
+         delegate:
+             MapPolyline {
+             line.width: 2
+             line.color: 'red'
+             path: path
+         }
+     }*/
+
+    MapItemView{
         id: tracksLines
         model: linesModel
         delegate:
@@ -191,7 +219,6 @@ Map {
             }
         }
     }
-
 
     function changeMapCenter(lat, lon) // меняем положение карты
     {

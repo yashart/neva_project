@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtLocation 5.6
 import "../components"
+import "../map"
 
 MenuBar {
     property variant fileMenu: fileMenu
@@ -30,7 +31,22 @@ MenuBar {
                 pageMap.clearMap();
             }
         }
+        MenuItem {
+            text: "Тихорецк"
+            onTriggered: {
+                pageMap.clearMap();
+                pageMap.changeSource("1");
+            }
+        }
+        MenuItem {
+            text: "Фурмановка"
+            shortcut: "Ctrl+С"
+            onTriggered: {
+                pageMap.clearMap();
+            }
+        }
     }
+
 
     Menu {
         id: trackMenu

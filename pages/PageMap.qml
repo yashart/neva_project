@@ -17,6 +17,12 @@ Item
         id: toolBarMap
     }
 
+    function changeSource(source){
+        //mapPlugin.
+       // var plugin = Qt.createQmlObject ('import QtLocation 5.6; Plugin {id: mapboxPlugin; name: "mapbox";    PluginParameter { name: "mapbox.access_token"; value: "pk.eyJ1IjoicHJvbWlzdHJpbyIsImEiOiJjaW1wNmIzaHQwMDJ5d2FtNGNhb28zZTRsIn0.nYE56atkirjFdB5oEkpYVA" }  PluginParameter { name: "mapbox.map_id"; value: "promistrio.1i2blkkj" }}', mapComponent);
+        //mapComponent.plugin = plugin;
+    }
+
     function clearMap()
     {
         mapComponent.clearData();

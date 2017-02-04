@@ -104,6 +104,28 @@ Window {
                     delegate: contactDelegate
                 }
             }
+
+            ListModel {
+                    id: dataModel
+
+                    ListElement {
+                        color: "orange"
+                        txt: "one"
+                    }
+                    ListElement {
+                        color: "skyblue"
+                        txt: "two"
+                    }
+                }
+
+            ListView {
+                width: 180; height: 200
+
+                model: rulerModel
+                delegate: Text {
+                    text: txt + "Hello"
+                }
+            }
         }
     }
 
