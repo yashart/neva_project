@@ -26,7 +26,7 @@ public:
         {
             return this->m_rulerList.first();
         }
-        return QVariant();
+        return QVariant::fromValue(QGeoCoordinate(34.0, -42.0));
     }
 
     QVariant finishPoint()
@@ -35,7 +35,8 @@ public:
         {
             return this->m_rulerList.last();
         }
-        return QVariant();
+
+        return QVariant::fromValue(QGeoCoordinate(34.0, -42.0)); // убрать в океан
     }
     QVariant distance();
 
