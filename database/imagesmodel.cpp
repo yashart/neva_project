@@ -85,7 +85,7 @@ void ImagesModel::updateModel()
         }
     }
 
-    str_query.append(") ORDER BY Points.track_id;");
+    str_query.append(") ORDER BY Points.url DESC;");
     this->setQuery(str_query);
 
     while(this->canFetchMore()){ // загрузка всех данных в кэш

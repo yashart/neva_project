@@ -24,7 +24,7 @@ Window {
             width: pictureWindow.width
             height: pictureWindow.height
             Layout.preferredWidth: pictureWindow.width
-            Layout.preferredHeight: pictureWindow.height - 155
+            Layout.preferredHeight: pictureWindow.height - 154
 
             Image {
                 id: image
