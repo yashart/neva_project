@@ -10,6 +10,8 @@ ScrollView {
     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
     horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOn
     RowLayout {
+        LayoutMirroring.enabled: true
+        LayoutMirroring.childrenInherit: true
         Repeater {
             model: imagesModel
             delegate: Rectangle {
