@@ -34,7 +34,8 @@ HEADERS += \
     database/locationsmodel.h \
     database/linesModel.h \
     database/pointsphotomodel.h \
-    models/rulerModel.h
+    models/rulerModel.h \
+    providers/sliderimageprovider.h
 
 DISTFILES += \
     database/DataBase.db

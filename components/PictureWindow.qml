@@ -141,11 +141,11 @@ Window {
             }
         }
 
-        /*ImageSlideView {
+        ImageSlideView {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
             id: imageSlideView
-        }*/
+        }
     }
     function createTrackPath(source)
     {

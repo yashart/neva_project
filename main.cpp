@@ -10,6 +10,7 @@
 #include "database/linesModel.h"
 #include "database/pointsphotomodel.h"
 #include "models/rulerModel.h"
+#include "providers/sliderimageprovider.h"
 
 int main(int argc, char *argv[])
 {
@@ -47,6 +48,8 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("linesModel", &linesModel);
     ctx->setContextProperty("pointsPhotoModel", &pointsPhotoModel);
     ctx->setContextProperty("rulerModel", &rulerModel);
+
+    engine.addImageProvider(QLatin1String("colors"), new SliderImageProvider());
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();
