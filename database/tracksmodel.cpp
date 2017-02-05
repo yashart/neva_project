@@ -103,7 +103,7 @@ QVector<QVariantList> TracksModel::getPointsOfTracks()
         QSqlQuery query;
 
         query.prepare("SELECT lat, lon FROM Points WHERE Points.track_id = :track_id");
-        query.bindValue(":track_id", 1/*tracksIdList.at(1)*/);
+        query.bindValue(":track_id", 1);
         if (!query.exec()){
             qDebug() << "Error:" << query.lastError().text();
         }

@@ -8,6 +8,7 @@ import "../pages"
 
 ScrollView {
     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+    horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOn
     RowLayout {
         Repeater {
             model: imagesModel
@@ -26,7 +27,6 @@ ScrollView {
                     onClicked: {
                         pageMap.changeMapCenter(lat, lon);
                         pageMap.changeViewPortCenter(lat, lon);
-                        console.log("file:///" + dir + url);
                         pictureWindow.changeImageSource("file:///" + dir + url, url, 0, lat, lon);
                     }
                 }

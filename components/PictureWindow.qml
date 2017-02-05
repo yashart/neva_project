@@ -24,21 +24,17 @@ Window {
             width: pictureWindow.width
             height: pictureWindow.height
             Layout.preferredWidth: pictureWindow.width
-            Layout.preferredHeight: pictureWindow.height - 50
+            Layout.preferredHeight: pictureWindow.height - 155
 
             Image {
                 id: image
                 asynchronous: false
                 //width: pictureWindow.width
                 height: pictureWindow.height - 50
-                //source: "file:///home/yashart/Downloads/Furmanovka/DSC01751.JPG"
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
                 z: 1
                 cache: false
-                Component.onCompleted: {
-                    //console.log("Completed!");
-                }
 
                 property var lat: 0
                 property var lon: 0
