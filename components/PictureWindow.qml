@@ -31,7 +31,7 @@ Window {
                 asynchronous: false
                 //width: pictureWindow.width
                 height: pictureWindow.height - 50
-                source: "file:///home/yashart/Downloads/Furmanovka/DSC01751.JPG"
+                //source: "file:///home/yashart/Downloads/Furmanovka/DSC01751.JPG"
                 fillMode: Image.PreserveAspectFit
                 Drag.active: dragArea.drag.active
                 z: 1
