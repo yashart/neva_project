@@ -72,7 +72,7 @@ void ImagesModel::updateModel()
     str_query.append("Points.type ");
     str_query.append("FROM Points ");
     str_query.append("LEFT OUTER JOIN Tracks ON Tracks.id = Points.track_id ");
-    str_query.append("WHERE Points.track_id IN (1");
+    str_query.append("WHERE Points.track_id IN (");
 
     for (int i = 0; i < list_id.size(); i++){
         if (i == list_id.size() - 1) // обработка последнего элемента
@@ -85,7 +85,7 @@ void ImagesModel::updateModel()
         }
     }
 
-    str_query.append(") ORDER BY Points.track_id LIMIT 5;");
+    str_query.append(") ORDER BY Points.track_id;");
     this->setQuery(str_query);
 
     while(this->canFetchMore()){ // загрузка всех данных в кэш

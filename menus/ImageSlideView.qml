@@ -20,7 +20,8 @@ ScrollView {
                         anchors.fill: parent
                         source: "image://colors/" + dir + url
                         autoTransform: true
-                        smooth: false
+                        smooth: true
+                        asynchronous: true
                     }
                     onClicked: {
                         pageMap.changeMapCenter(lat, lon);
